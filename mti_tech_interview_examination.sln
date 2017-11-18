@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2008
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mti_tech_interview_examination", "mti_tech_interview_examination\mti_tech_interview_examination.csproj", "{FED9209C-1159-4B94-B987-B4105D459153}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mti_tech_interview_examinationTests", "mti_tech_interview_examinationTests\mti_tech_interview_examinationTests.csproj", "{212F6AA0-9D33-42E2-9261-D0E9E83CCA1A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FED9209C-1159-4B94-B987-B4105D459153}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FED9209C-1159-4B94-B987-B4105D459153}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FED9209C-1159-4B94-B987-B4105D459153}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FED9209C-1159-4B94-B987-B4105D459153}.Release|Any CPU.Build.0 = Release|Any CPU
+		{212F6AA0-9D33-42E2-9261-D0E9E83CCA1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{212F6AA0-9D33-42E2-9261-D0E9E83CCA1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{212F6AA0-9D33-42E2-9261-D0E9E83CCA1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{212F6AA0-9D33-42E2-9261-D0E9E83CCA1A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3E240B6E-885B-4B7B-AFFC-2A5C887D7AAF}
+	EndGlobalSection
+EndGlobal
