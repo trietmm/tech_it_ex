@@ -154,6 +154,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Lib\Interface\ICandidate.cs" />
     <Compile Include="Migrations\201711180916218_create_table_question.cs" />
     <Compile Include="Migrations\201711180916218_create_table_question.Designer.cs">
       <DependentUpon>201711180916218_create_table_question.cs</DependentUpon>
@@ -213,7 +214,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Lib\" />
+    <Folder Include="Lib\Execute\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
