@@ -158,9 +158,17 @@
     <Compile Include="Migrations\201711180916218_create_table_question.Designer.cs">
       <DependentUpon>201711180916218_create_table_question.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711191537113_add_table.cs" />
+    <Compile Include="Migrations\201711191537113_add_table.Designer.cs">
+      <DependentUpon>201711191537113_add_table.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CommonModel.cs" />
     <Compile Include="Models\Entity\Interview_Examination_Context.cs" />
+    <Compile Include="Models\Entity\Mti_Candidate.cs" />
+    <Compile Include="Models\Entity\Mti_Candidate_Question.cs" />
+    <Compile Include="Models\Entity\Mti_Answer.cs" />
+    <Compile Include="Models\Entity\Mti_Question_Answer.cs" />
     <Compile Include="Models\Entity\Mti_Question.cs" />
     <Compile Include="Models\QueryData\Query_Question.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -226,6 +234,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201711180916218_create_table_question.resx">
       <DependentUpon>201711180916218_create_table_question.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711191537113_add_table.resx">
+      <DependentUpon>201711191537113_add_table.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

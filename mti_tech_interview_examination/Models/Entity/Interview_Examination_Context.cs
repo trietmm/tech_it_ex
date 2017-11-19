@@ -21,6 +21,10 @@ namespace mti_tech_interview_examination.Models.Entity
         // on configuring and using a Code First model, see http://go.microsoft.com/fwlink/?LinkId=390109.
 
         public virtual DbSet<Mti_Question> Mti_Question { get; set; }
+        public virtual DbSet<Mti_Candidate> Mti_Candidate { get; set; }
+        public virtual DbSet<Mti_Answer> Mti_Answer { get; set; }
+        public virtual DbSet<Mti_Candidate_Question> Mti_Candidate_Question { get; set; }
+        public virtual DbSet<Mti_Question_Answer> Mti_Question_Answer { get; set; }
     }
 
     //public class MyEntity
