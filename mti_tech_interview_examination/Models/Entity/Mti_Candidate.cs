@@ -18,5 +18,7 @@ namespace mti_tech_interview_examination.Models.Entity
         public int CandidateBirthYear { get; set; }
         public DateTime DateMakeExam { get; set; }
         public string ImgURL { get; set; }
+
+        public LevelCandidate level { get; set; }
     }
 }

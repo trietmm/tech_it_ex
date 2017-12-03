@@ -18,5 +18,7 @@ namespace mti_tech_interview_examination.Models.Entity
         [MaxLength(500)]
         public string QuestionContent { get; set; }
         public QuestionType QuestionType { get; set; }
+        public QuestionLevel QuestionLevel { get; set; }
+
     }
 }

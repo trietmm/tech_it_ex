@@ -154,6 +154,12 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Lib\Execute\Extention.cs" />
+    <Compile Include="Lib\Execute\Common.cs" />
+    <Compile Include="Lib\Execute\Generate.cs" />
+    <Compile Include="Lib\Interface\IAnswer.cs" />
+    <Compile Include="Lib\Interface\IGenerate.cs" />
+    <Compile Include="Lib\Interface\IQuestion.cs" />
     <Compile Include="Lib\Interface\ICandidate.cs" />
     <Compile Include="Migrations\201711180916218_create_table_question.cs" />
     <Compile Include="Migrations\201711180916218_create_table_question.Designer.cs">
@@ -214,7 +220,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Lib\Execute\" />
+    <Folder Include="Models\Response\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
