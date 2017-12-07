@@ -56,6 +56,9 @@
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.7\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.4.12\lib\net45\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -154,9 +157,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Lib\Execute\BaseClass.cs" />
     <Compile Include="Lib\Execute\Extention.cs" />
     <Compile Include="Lib\Execute\Common.cs" />
-    <Compile Include="Lib\Execute\Generate.cs" />
+    <Compile Include="Lib\Execute\RepoCandidate.cs" />
+    <Compile Include="Lib\Execute\RepoGenerate.cs" />
     <Compile Include="Lib\Interface\IAnswer.cs" />
     <Compile Include="Lib\Interface\IGenerate.cs" />
     <Compile Include="Lib\Interface\IQuestion.cs" />
@@ -172,7 +177,7 @@
     <Compile Include="Models\Entity\Mti_Candidate_Question.cs" />
     <Compile Include="Models\Entity\Mti_Answer.cs" />
     <Compile Include="Models\Entity\Mti_Question.cs" />
-    <Compile Include="Models\QueryData\Query_Question.cs" />
+    <Compile Include="Models\QueryData\Query_Candidate.cs" />
     <Compile Include="Models\Response\Response_Question.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -213,6 +218,9 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

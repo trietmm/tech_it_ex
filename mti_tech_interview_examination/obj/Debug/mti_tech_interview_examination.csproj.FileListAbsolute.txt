@@ -143,3 +143,6 @@ G:\WorkProject\tech_it_ex\mti_tech_interview_examination\bin\Microsoft.AI.Window
 G:\WorkProject\tech_it_ex\mti_tech_interview_examination\bin\Microsoft.AI.Web.xml
 G:\WorkProject\tech_it_ex\mti_tech_interview_examination\obj\Debug\mti_tech_interview_examination.Migrations.setupDB.resources
 G:\WorkProject\tech_it_ex\mti_tech_interview_examination\obj\Debug\mti_tech_interview_examination.csproj.GenerateResource.Cache
+G:\WorkProject\tech_it_ex\mti_tech_interview_examination\bin\NLog.dll
+G:\WorkProject\tech_it_ex\mti_tech_interview_examination\bin\NLog.xml
+G:\WorkProject\tech_it_ex\mti_tech_interview_examination\bin\NLog.config

@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using mti_tech_interview_examination.Lib.Execute;
 using mti_tech_interview_examination.Models.QueryData;
 using System;
 using System.Collections.Generic;
@@ -14,12 +15,8 @@ namespace mti_tech_interview_examination.Models.QueryData.Tests
         [TestMethod()]
         public void QuestionInsertTest()
         {
-            Query_Question query = new Query_Question();
-            var obj = new Entity.Mti_Question() { QuestionContent = "Question Content Test", QuestionName = "Question Name Test", QuestionType = CommonModel.QuestionType.Selection };
-            query.QuestionInsert(obj);
-            var questionSelected = query.QuestionSelect(obj.Id);
-            Assert.IsTrue(questionSelected != null);
-            query.QuestionDelete(obj.Id);
+            RepoCandidate r = new RepoCandidate();
+            r.testNlog();
         }
     }
 }
