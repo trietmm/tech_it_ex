@@ -7,13 +7,13 @@ namespace mti_tech_interview_examination.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class create_table_question : IMigrationMetadata
+    public sealed partial class setupDB : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(create_table_question));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(setupDB));
         
         string IMigrationMetadata.Id
         {
-            get { return "201711180916218_create_table_question"; }
+            get { return "201712071630055_setupDB"; }
         }
         
         string IMigrationMetadata.Source

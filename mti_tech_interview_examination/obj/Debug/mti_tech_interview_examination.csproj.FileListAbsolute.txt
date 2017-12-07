@@ -96,9 +96,6 @@ F:\WorkProject\tech_it_ex\mti_tech_interview_examination\obj\Debug\mti_tech_inte
 F:\WorkProject\tech_it_ex\mti_tech_interview_examination\obj\Debug\mti_tech_interview_examination.pdb
 F:\WorkProject\tech_it_ex\mti_tech_interview_examination\obj\Debug\mti_tech_interview_examination.Migrations.add_table.resources
 G:\WorkProject\tech_it_ex\mti_tech_interview_examination\obj\Debug\mti_tech_interview_examination.csprojResolveAssemblyReference.cache
-G:\WorkProject\tech_it_ex\mti_tech_interview_examination\obj\Debug\mti_tech_interview_examination.Migrations.create_table_question.resources
-G:\WorkProject\tech_it_ex\mti_tech_interview_examination\obj\Debug\mti_tech_interview_examination.Migrations.add_table.resources
-G:\WorkProject\tech_it_ex\mti_tech_interview_examination\obj\Debug\mti_tech_interview_examination.csproj.GenerateResource.Cache
 G:\WorkProject\tech_it_ex\mti_tech_interview_examination\obj\Debug\mti_tech_interview_examination.csproj.CoreCompileInputs.cache
 G:\WorkProject\tech_it_ex\mti_tech_interview_examination\obj\Debug\mti_tech_interview_examination.dll
 G:\WorkProject\tech_it_ex\mti_tech_interview_examination\obj\Debug\mti_tech_interview_examination.pdb
@@ -144,3 +141,5 @@ G:\WorkProject\tech_it_ex\mti_tech_interview_examination\bin\Microsoft.AI.Depend
 G:\WorkProject\tech_it_ex\mti_tech_interview_examination\bin\Microsoft.AI.ServerTelemetryChannel.xml
 G:\WorkProject\tech_it_ex\mti_tech_interview_examination\bin\Microsoft.AI.WindowsServer.xml
 G:\WorkProject\tech_it_ex\mti_tech_interview_examination\bin\Microsoft.AI.Web.xml
+G:\WorkProject\tech_it_ex\mti_tech_interview_examination\obj\Debug\mti_tech_interview_examination.Migrations.setupDB.resources
+G:\WorkProject\tech_it_ex\mti_tech_interview_examination\obj\Debug\mti_tech_interview_examination.csproj.GenerateResource.Cache

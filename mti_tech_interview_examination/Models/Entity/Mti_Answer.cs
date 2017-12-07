@@ -15,5 +15,8 @@ namespace mti_tech_interview_examination.Models.Entity
         public int Id { get; set; }
         [MaxLength(500)]
         public string AnswerContent { get; set; }
+        public int QuestionId { get; set; }
+        [ForeignKey("QuestionId")]
+        public Mti_Question Question { get; set; }
     }
 }
