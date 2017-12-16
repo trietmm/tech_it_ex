@@ -15,8 +15,8 @@ namespace mti_tech_interview_examination.Models.QueryData.Tests
         [TestMethod()]
         public void QuestionInsertTest()
         {
-            RepoCandidate r = new RepoCandidate();
-            r.testNlog();
+            //RepoCandidate r = new RepoCandidate();
+            //r.testNlog();
         }
     }
 }

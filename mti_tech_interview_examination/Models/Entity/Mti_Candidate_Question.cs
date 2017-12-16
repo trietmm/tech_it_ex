@@ -20,5 +20,17 @@ namespace mti_tech_interview_examination.Models.Entity
         [ForeignKey("QuestionId")]
         public Mti_Question Question { get; set; }
         public string CandidateAnswer { get; set; }
+
+        /// <summary>
+        /// if the answer for question is the text this is the type of question
+        /// </summary>
+        public bool IsText { get; set; }
+
+        /// <summary>
+        /// this is will automatic for check the answer of candidate
+        /// it also change by teacher if the question is the text
+        /// it maybe not finish by teacher so it maybe nullable
+        /// </summary>
+        public bool? IsRight { get; set; }
     }
 }

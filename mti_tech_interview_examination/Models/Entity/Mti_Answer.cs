@@ -18,5 +18,8 @@ namespace mti_tech_interview_examination.Models.Entity
         public int QuestionId { get; set; }
         [ForeignKey("QuestionId")]
         public Mti_Question Question { get; set; }
+
+        public bool? IsRight { get; set; }
+       
     }
 }

@@ -10,7 +10,7 @@ namespace mti_tech_interview_examination.Lib.Execute
 {
     public class RepoGenerate : IGenerate
     {
-        
+
         public List<Response_Question> GenerateQuestion(ICandidate icandidate, int idCandidate)
         {
             List<Response_Question> lstQuestion = new List<Response_Question>();
@@ -32,7 +32,7 @@ namespace mti_tech_interview_examination.Lib.Execute
                 lstTotalIds.AddRange(lstQuestionNormal);
                 lstTotalIds.AddRange(lstQuestionEasy);
 
-
+                SaveCandidateQuestion(Context, idCandidate, lstTotalIds);
                 lstQuestion = Context.Mti_Question.Where(m => lstTotalIds.Contains(m.Id)).Select(m => new Response_Question() { QuestionId = m.Id, QuestionText = m.QuestionContent, QuestionType = m.QuestionType }).ToList();
                 var lstAnswer = Context.Mti_Answer.Where(m => lstTotalIds.Contains(m.QuestionId)).Select(m => new Response_QuestionAnswer() { AnswerId = m.Id, Text = m.AnswerContent, QuestionId = m.QuestionId }).ToList();
                 foreach (var question in lstQuestion)
@@ -45,6 +45,28 @@ namespace mti_tech_interview_examination.Lib.Execute
             //TODO implement method GenerateQuestion
             return lstQuestion;
 
+        }
+
+        private void SaveCandidateQuestion(Interview_Examination_Context context, int idCandidate, List<int> lstQuestionIds)
+        {
+            var lstQuestionDB = context.Mti_Question.Where(m => lstQuestionIds.Contains(m.Id)).Select(m => new { m.Id, m.QuestionType }).ToList();
+            foreach (var questionId in lstQuestionIds)
+            {
+                Mti_Candidate_Question candidateQuestion = new Mti_Candidate_Question();
+                candidateQuestion.CandidateId = idCandidate;
+                candidateQuestion.QuestionId = questionId;
+                var questionDB = lstQuestionDB.Where(m => m.Id == questionId).FirstOrDefault();
+                if (questionDB != null && questionDB.QuestionType == Models.CommonModel.QuestionType.Text)
+                {
+                    candidateQuestion.IsRight = true;
+                }
+                else
+                {
+                    candidateQuestion.IsRight = false;
+                }
+                context.Mti_Candidate_Question.Add(candidateQuestion);
+            }
+            context.SaveChanges();
         }
     }
 
