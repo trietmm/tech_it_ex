@@ -115,12 +115,12 @@ namespace mti_tech_interview_examination.Lib.Execute
             return ObjResult;
         }
 
-        public void Register(Mti_Candidate candidate)
+        public int Register(Mti_Candidate candidate)
         {
-            Update(candidate);
+           return Update(candidate);
         }
 
-        public void Update(Mti_Candidate candidate)
+        public int Update(Mti_Candidate candidate)
         {
             try
             {
@@ -142,6 +142,7 @@ namespace mti_tech_interview_examination.Lib.Execute
                     }
                     context.SaveChanges();
                 }
+                return candidate.Id;
             }
             catch (Exception e)
             {

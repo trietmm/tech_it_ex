@@ -11,12 +11,12 @@ namespace mti_tech_interview_examination.Lib.Execute
     public class RepoGenerate : IGenerate
     {
 
-        public List<Response_Question> GenerateQuestion(ICandidate icandidate, int idCandidate)
+        public List<Response_Question> GenerateQuestion(int idCandidate)
         {
             List<Response_Question> lstQuestion = new List<Response_Question>();
             using (var Context = new Interview_Examination_Context())
             {
-                Mti_Candidate candidate = icandidate.GetCandidate(idCandidate);
+                Mti_Candidate candidate = Context.Mti_Candidate.Where(m => m.Id == idCandidate).FirstOrDefault();
                 int questionHard = 0;
                 int questionNormal = 0;
                 int questionEasy = 0;

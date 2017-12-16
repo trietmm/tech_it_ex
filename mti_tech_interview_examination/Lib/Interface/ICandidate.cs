@@ -11,8 +11,8 @@ namespace mti_tech_interview_examination.Lib.Interface
 {
     public interface ICandidate
     {
-        void Register(Mti_Candidate candidate);
-        void Update(Mti_Candidate candidate);
+        int Register(Mti_Candidate candidate);
+        int Update(Mti_Candidate candidate);
         Mti_Candidate GetCandidate(int id);
         List<Mti_Candidate> lstCandidate(Query_Candidate query);
 
