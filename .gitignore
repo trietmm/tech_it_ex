@@ -51,3 +51,9 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+**/node_modules/*
+**/packages/*
+**/obj/*
+**/bin/*
+**/debug/*
+**/.vs/*
