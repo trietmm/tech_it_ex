@@ -9,7 +9,7 @@ namespace mti_tech_interview_examination.Lib.Execute
     public static class Common
     {
 
-        public static void GetNumberQuestionByLevel(LevelCandidate lev, out int questionHard, out int questionNormal, out int questionEasy)
+        public static int GetNumberQuestionByLevel(LevelCandidate lev, out int questionHard, out int questionNormal, out int questionEasy)
         {
             switch (lev)
             {
@@ -37,7 +37,10 @@ namespace mti_tech_interview_examination.Lib.Execute
                         questionNormal = 5;
                         questionEasy = 15;
                     }; break;
+                    
             }
+            //return total question
+            return questionEasy + questionNormal + questionHard;
         }
     }
 }

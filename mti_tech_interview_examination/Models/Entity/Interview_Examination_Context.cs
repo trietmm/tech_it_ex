@@ -24,8 +24,16 @@ namespace mti_tech_interview_examination.Models.Entity
         public virtual DbSet<Mti_Candidate> Mti_Candidate { get; set; }
         public virtual DbSet<Mti_Answer> Mti_Answer { get; set; }
         public virtual DbSet<Mti_Candidate_Question> Mti_Candidate_Question { get; set; }
-        
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            Database.SetInitializer<Interview_Examination_Context>(null);
+            base.OnModelCreating(modelBuilder);
+        }
+
     }
+
+    
 
     //public class MyEntity
     //{
