@@ -50,11 +50,11 @@ namespace mti_tech_interview_examination.Models
         /// Answers
         /// </summary>        
         [MaxLength(500)]
-        public List<string> AnswerContents { get; set; }
+        public string[] AnswerContents { get; set; }
 
         /// <summary>
         /// Correct answer indexes
         /// </summary>
-        public List<int> CorrectAnswerIndexes { get; set; }
+        public int[] CorrectAnswerIndexes { get; set; }
     }
 }

@@ -106,6 +106,32 @@ var Site =
 	            var api = new _Site.Api();
 	            api.loadQuestions();
 	        }
+	    }, {
+	        key: "handleEvent",
+	        value: function handleEvent() {
+	            var $questionTypes = $("[name=QuestionType]");
+	            var $answerPanel = $("#AnswerPanel");
+	
+	            $answerPanel.show();
+	            $(".checkbox-choice").hide();
+	            $(".radio-choice").show();
+	
+	            $questionTypes.change(function () {
+	                $("[name=CorrectAnswerIndexes]").removeAttr("checked");
+	
+	                if ($questionTypes.filter("[value=Text]:checked").length > 0) {
+	                    $answerPanel.hide();
+	                } else if ($questionTypes.filter("[value=Selection]:checked").length > 0) {
+	                    $answerPanel.show();
+	                    $(".checkbox-choice").hide();
+	                    $(".radio-choice").show();
+	                } else {
+	                    $answerPanel.show();
+	                    $(".checkbox-choice").show();
+	                    $(".radio-choice").hide();
+	                }
+	            });
+	        }
 	    }]);
 
 	    return Logic;

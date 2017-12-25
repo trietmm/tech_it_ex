@@ -165,6 +165,7 @@
     <Compile Include="Lib\Execute\Common.cs" />
     <Compile Include="Lib\Execute\RepoCandidate.cs" />
     <Compile Include="Lib\Execute\RepoGenerate.cs" />
+    <Compile Include="Lib\Execute\RepoQuestion.cs" />
     <Compile Include="Lib\Interface\IAnswer.cs" />
     <Compile Include="Lib\Interface\IGenerate.cs" />
     <Compile Include="Lib\Interface\IQuestion.cs" />
@@ -174,6 +175,7 @@
       <DependentUpon>201712071630055_setupDB.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\NotificationModel.cs" />
     <Compile Include="Models\QuestionModel.cs" />
     <Compile Include="Models\CandidateModel.cs" />
     <Compile Include="Models\CommonModel.cs" />
@@ -247,6 +249,7 @@
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Admin\Login.cshtml" />
     <Content Include="Views\Admin\CreateQuestion.cshtml" />
+    <Content Include="Views\Admin\Notification.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

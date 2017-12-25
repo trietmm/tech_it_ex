@@ -209,7 +209,31 @@ input[type="radio"] {
         padding: 30px;
     }
 }
-    /*#endregion*/
+/*#endregion*/
+
+
+/*#region Admin*/
+#QuestionForm {
+    padding: 40px;
+
+    .form-line {
+        span {
+            display: inline-block;
+            padding: 0 15px 0 2px;
+        }
+    }
+}
+#AnswerPanel {
+    input[type='text'] {
+        width: 90%;
+        display: inline-block;
+    }
+
+    input[type='radio'], input[type='checkbox'] {
+        vertical-align:middle;
+    }
+}
+/*#endregion*/
 
 
 
