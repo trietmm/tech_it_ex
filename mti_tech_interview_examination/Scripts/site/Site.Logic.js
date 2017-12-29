@@ -13,8 +13,9 @@ export class Logic {
         $(".checkbox-choice").hide();
         $(".radio-choice").show();
 
-        $questionTypes.change(function () {
-            $("[name=CorrectAnswerIndexes]").removeAttr("checked");
+        let changeState = function (isInit = false) {
+            
+            
 
             if ($questionTypes.filter("[value=Text]:checked").length > 0) {
                 $answerPanel.hide();
@@ -29,6 +30,12 @@ export class Logic {
                 $(".checkbox-choice").show();
                 $(".radio-choice").hide();
             }
-        });
+            $("[name=CorrectAnswerIndexes]:hidden").removeAttr("checked");
+        };
+
+        changeState(true);
+        $questionTypes.change(changeState);
     }
+
+
 }

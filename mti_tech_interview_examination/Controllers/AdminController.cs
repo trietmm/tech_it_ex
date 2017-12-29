@@ -26,7 +26,12 @@ namespace mti_tech_interview_examination.Controllers
         public ActionResult Login()
         {
             if (HttpContext.User.Identity.IsAuthenticated)
-                return RedirectToAction("CreateQuestion");
+            {
+                if (HttpContext.User.Identity.Name == "admin")
+                    return RedirectToAction("CreateQuestion");
+                else
+                    FormsAuthentication.SignOut();
+            }                
             return View();
         }
 
@@ -105,6 +110,89 @@ namespace mti_tech_interview_examination.Controllers
             return View(model);
         }
 
+
+        /// <summary>
+        /// Update question
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult UpdateQuestion(int id)
+        {
+            IQuestion repoCandidate = new RepoQuestion();
+
+            //Get question
+            Mti_Question question = repoCandidate.ViewQuestion(id);
+            string[] answerContents = (question.Answers??new List<Mti_Answer>()).Select(a => a.AnswerContent).ToArray();
+            int[] answerIds = (question.Answers ?? new List<Mti_Answer>()).Select(a => a.Id).ToArray();
+            int[] correctAnswerIndexes = (question.Answers ?? new List<Mti_Answer>()).Where(a => a.IsRight == true).Select(a => a.Id).ToArray();
+
+            if (question != null)
+            {
+                //Create question model
+                QuestionModel model = new QuestionModel
+                {
+                    Id = question.Id,
+                    QuestionContent = question.QuestionContent,
+                    QuestionLevel = question.QuestionLevel,
+                    QuestionName = question.QuestionName,
+                    QuestionType = question.QuestionType,
+                    AnswerContents = answerContents,
+                    AnswerIds = answerIds,
+                    CorrectAnswerIndexes = correctAnswerIndexes
+                };
+                return View(model);
+            }
+
+            return View();
+        }
+
+        /// <summary>
+        /// Submit form to register new candidate
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult UpdateQuestion(QuestionModel model)
+        {
+            //Check if model is valid
+            if (ModelState.IsValid)
+            {
+                IQuestion repoCandidate = new RepoQuestion();
+
+                //create new question
+                Mti_Question question = new Mti_Question
+                {
+                    Id = model.Id,
+                    QuestionName = model.QuestionName,
+                    QuestionContent = model.QuestionContent,
+                    QuestionLevel = model.QuestionLevel,
+                    QuestionType = model.QuestionType
+                };
+
+                //Create list of anwser
+                List<Mti_Answer> answers = new List<Mti_Answer>();
+                for (int i = 0; i < model.AnswerContents.Length; i++)
+                {
+                    Mti_Answer ans = new Mti_Answer
+                    {
+                        Id = model.AnswerIds[i],
+                        AnswerContent = model.AnswerContents[i],
+                        IsRight = model.CorrectAnswerIndexes.Contains(i),
+                        QuestionId = model.Id
+                    };
+                    answers.Add(ans);
+
+                }
+
+                repoCandidate.UpdateQuestion(question, answers);
+
+                //Redirect to start page
+                return RedirectToAction("UpdateQuestionSuccess");
+
+            }
+            return View(model);
+        }
+
         /// <summary>
         /// CreateQuestionSuccess
         /// </summary>
@@ -132,6 +220,17 @@ namespace mti_tech_interview_examination.Controllers
                     ButtonText = "Back to list",
                     ButtonLink = "/Admin/ListQuestions"
                 });
+        }
+
+        /// <summary>
+        /// List all the questions
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ListQuestions()
+        {
+            IQuestion repoCandidate = new RepoQuestion();
+            List <Mti_Question> questions = repoCandidate.ListQuestion();
+            return View(questions);
         }
     }
 }

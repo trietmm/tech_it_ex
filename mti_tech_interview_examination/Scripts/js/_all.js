@@ -116,8 +116,9 @@ var Site =
 	            $(".checkbox-choice").hide();
 	            $(".radio-choice").show();
 	
-	            $questionTypes.change(function () {
-	                $("[name=CorrectAnswerIndexes]").removeAttr("checked");
+	            var changeState = function changeState() {
+	                var isInit = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+	
 	
 	                if ($questionTypes.filter("[value=Text]:checked").length > 0) {
 	                    $answerPanel.hide();
@@ -130,7 +131,11 @@ var Site =
 	                    $(".checkbox-choice").show();
 	                    $(".radio-choice").hide();
 	                }
-	            });
+	                $("[name=CorrectAnswerIndexes]:hidden").removeAttr("checked");
+	            };
+	
+	            changeState(true);
+	            $questionTypes.change(changeState);
 	        }
 	    }]);
 

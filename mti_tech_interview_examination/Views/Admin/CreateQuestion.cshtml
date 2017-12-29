@@ -34,39 +34,19 @@
         </div>
         
         <div id="AnswerPanel">
-            <div class="form-line">
-                <label>Answer 1</label>
-                <input type="text" name="AnswerContents" class="form-control" />
-                <input type="checkbox" value="0" name="CorrectAnswerIndexes" class="checkbox-choice" />
-                <input type="radio"  value="0"  name="CorrectAnswerIndexes" class="radio-choice" />
-            </div>
-            <div class="form-line">
-                <label>Answer 2</label>
-                <input type="text" name="AnswerContents" class="form-control" />
-                <input type="checkbox" value="1"  name="CorrectAnswerIndexes" class="checkbox-choice" />
-                <input type="radio"  value="1" name="CorrectAnswerIndexes" class="radio-choice" />
-            </div>
-            <div class="form-line">
-                <label>Answer 3</label>
-                <input type="text" name="AnswerContents" class="form-control" />
-                <input type="checkbox" value="2"  name="CorrectAnswerIndexes" class="checkbox-choice" />
-                <input type="radio"  value="2" name="CorrectAnswerIndexes" class="radio-choice" />
-            </div>
-            <div class="form-line">
-                <label>Answer 4</label>
-                <input type="text" name="AnswerContents" class="form-control" />
-                <input type="checkbox" value="3"  name="CorrectAnswerIndexes" class="checkbox-choice" />
-                <input type="radio" value="3"  name="CorrectAnswerIndexes" class="radio-choice" />
-            </div>
-            <div class="form-line">
-                <label>Answer 5</label>
-                <input type="text" name="AnswerContents" class="form-control" />
-                <input type="checkbox" value="4"  name="CorrectAnswerIndexes" class="checkbox-choice" />
-                <input type="radio" value="4"  name="CorrectAnswerIndexes" class="radio-choice" />
-            </div>
+            @for (int i = 0; i < Const.MaxAnswerCount; i++)
+            {
+                <div class="form-line">
+                    <label>Answer @i</label>
+                    <input type="text" name="AnswerContents" class="form-control" />
+                    <input type="checkbox" value="@i" name="CorrectAnswerIndexes" class="checkbox-choice" />
+                    <input type="radio" value="@i" name="CorrectAnswerIndexes" class="radio-choice" />
+                </div>
+            }            
         </div>
 
         <div class="text-right">
+            <input id="CancelButton" type="button" value="Back to list" onclick="javascript: location = '/Admin/ListQuestions';" class="btn btn-default btn-default" />
             <input id="SubmitButton" type="submit" value="Register" class="btn btn-default btn-info" />
         </div>
     </div>

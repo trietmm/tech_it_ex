@@ -12,6 +12,7 @@ namespace mti_tech_interview_examination.Common
     {
         public const int MaxAge = 55;
         public const int MinAge = 18;
+        public const int MaxAnswerCount = 5;
     }
 
     /// <summary>

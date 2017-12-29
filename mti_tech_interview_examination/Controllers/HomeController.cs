@@ -25,7 +25,12 @@ namespace mti_tech_interview_examination.Controllers
         public ActionResult Login()
         {
             if (HttpContext.User.Identity.IsAuthenticated)
-                return RedirectToAction("Candidate");
+            {
+                if(HttpContext.User.Identity.Name != "admin")
+                    return RedirectToAction("Candidate");
+                else 
+                    FormsAuthentication.SignOut();
+            }
             return View();
         }
 

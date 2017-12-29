@@ -250,6 +250,8 @@
     <Content Include="Views\Admin\Login.cshtml" />
     <Content Include="Views\Admin\CreateQuestion.cshtml" />
     <Content Include="Views\Admin\Notification.cshtml" />
+    <Content Include="Views\Admin\ListQuestions.cshtml" />
+    <Content Include="Views\Admin\UpdateQuestion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

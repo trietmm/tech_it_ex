@@ -235,5 +235,79 @@ input[type="radio"] {
 }
 /*#endregion*/
 
+#QuestionList {
+    padding: 0 40px 40px 40px;
 
+    .question {
+        padding: 10px 0;
+        border-bottom: 1px dashed #aaa;
+
+        &:last-of-type {
+            border-bottom: none;
+        }
+    }
+    .question-header {
+        position:relative;
+        &.easy {
+            color: #2a0;
+        }
+
+        &.normal {
+            color: orange;
+        }
+
+        &.hard {
+            color: #a00;
+        }
+        a{
+            position:absolute;
+            right:20px;
+        }
+    }
+    .question-content {
+        padding: 10px 0;
+    }
+
+    .question-type {
+        font-style: italic;
+    }
+
+    .question-answers {
+        line-height: 24px;
+        padding-left: 20px;
+        font-size: 13px;
+
+        .question-answer {
+            &.checked {
+                font-weight: bold;
+            }
+        }
+    }
+}
+.question-des {
+    padding: 20px 40px;
+    .box {
+        display: inline-block;
+        height: 20px;
+        width: 20px;
+        border-radius: 10px;
+        position: relative;
+        top: 5px;
+    }
+
+    .green-box {
+        @extend .box;
+        background-color: #2a0;
+    }
+
+    .yellow-box {
+        @extend .box;
+        background-color: orange;
+    }
+
+    .red-box {
+        @extend .box;
+        background-color: #a00;
+    }
+}
 

@@ -53,6 +53,11 @@ namespace mti_tech_interview_examination.Models
         public string[] AnswerContents { get; set; }
 
         /// <summary>
+        /// Answers Ids
+        /// </summary> 
+        public int[] AnswerIds { get; set; }
+
+        /// <summary>
         /// Correct answer indexes
         /// </summary>
         public int[] CorrectAnswerIndexes { get; set; }
