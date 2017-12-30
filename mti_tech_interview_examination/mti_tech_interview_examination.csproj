@@ -162,6 +162,7 @@
     <Compile Include="Lib\Execute\Common.cs" />
     <Compile Include="Lib\Execute\RepoCandidate.cs" />
     <Compile Include="Lib\Execute\RepoGenerate.cs" />
+    <Compile Include="Lib\Execute\RepoQuestion.cs" />
     <Compile Include="Lib\Interface\IAnswer.cs" />
     <Compile Include="Lib\Interface\IGenerate.cs" />
     <Compile Include="Lib\Interface\IQuestion.cs" />
@@ -169,6 +170,10 @@
     <Compile Include="Migrations\201712071630055_setupDB.cs" />
     <Compile Include="Migrations\201712071630055_setupDB.Designer.cs">
       <DependentUpon>201712071630055_setupDB.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712230139564_201712230839.cs" />
+    <Compile Include="Migrations\201712230139564_201712230839.Designer.cs">
+      <DependentUpon>201712230139564_201712230839.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CommonModel.cs" />
@@ -253,6 +258,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201712071630055_setupDB.resx">
       <DependentUpon>201712071630055_setupDB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712230139564_201712230839.resx">
+      <DependentUpon>201712230139564_201712230839.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

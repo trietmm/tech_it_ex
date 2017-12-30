@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using mti_tech_interview_examination.Models.Entity;
 using mti_tech_interview_examination.Models.Response;
+using System.Linq.Expressions;
 
 namespace mti_tech_interview_examination.Lib.Execute
 {
@@ -32,9 +33,14 @@ namespace mti_tech_interview_examination.Lib.Execute
             }
         }
 
-        public List<Mti_Question> ListQuestion()
+        public List<Mti_Question> ListQuestion(Expression<Func<Mti_Question,bool>> express)
         {
-            throw new NotImplementedException();
+            List<Mti_Question> ListResult = new List<Mti_Question>();
+            using (var Context = new Interview_Examination_Context())
+            {
+                ListResult = Context.Mti_Question.Where(express).ToList();
+            }
+            return ListResult;
         }
 
         public void UpdateQuestion(Mti_Question question, List<Mti_Answer> lstAnswer)
@@ -82,7 +88,12 @@ namespace mti_tech_interview_examination.Lib.Execute
 
         public Mti_Question ViewQuestion(int id)
         {
-            throw new NotImplementedException();
+            Mti_Question result = null;
+            using (var Context = new Interview_Examination_Context())
+            {
+                result = Context.Mti_Question.Where(m=>m.Id == id).FirstOrDefault();
+            }
+            return result;
         }
 
 
