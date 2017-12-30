@@ -33,15 +33,17 @@ namespace mti_tech_interview_examination.Lib.Execute
             }
         }
 
-        public List<Mti_Question> ListQuestion(Expression<Func<Mti_Question,bool>> express)
+        public List<Mti_Question> ListQuestion()
         {
             List<Mti_Question> ListResult = new List<Mti_Question>();
             using (var Context = new Interview_Examination_Context())
             {
-                ListResult = Context.Mti_Question.Where(express).ToList();
+                ListResult = Context.Mti_Question.Include("Answer").ToList();
             }
             return ListResult;
         }
+
+    
 
         public void UpdateQuestion(Mti_Question question, List<Mti_Answer> lstAnswer)
         {
@@ -91,7 +93,7 @@ namespace mti_tech_interview_examination.Lib.Execute
             Mti_Question result = null;
             using (var Context = new Interview_Examination_Context())
             {
-                result = Context.Mti_Question.Where(m=>m.Id == id).FirstOrDefault();
+                result = Context.Mti_Question.Where(m => m.Id == id).FirstOrDefault();
             }
             return result;
         }
