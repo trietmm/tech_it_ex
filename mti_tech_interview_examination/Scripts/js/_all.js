@@ -106,6 +106,37 @@ var Site =
 	            var api = new _Site.Api();
 	            api.loadQuestions();
 	        }
+	    }, {
+	        key: "handleEvent",
+	        value: function handleEvent() {
+	            var $questionTypes = $("[name=QuestionType]");
+	            var $answerPanel = $("#AnswerPanel");
+	
+	            $answerPanel.show();
+	            $(".checkbox-choice").hide();
+	            $(".radio-choice").show();
+	
+	            var changeState = function changeState() {
+	                var isInit = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+	
+	
+	                if ($questionTypes.filter("[value=Text]:checked").length > 0) {
+	                    $answerPanel.hide();
+	                } else if ($questionTypes.filter("[value=Selection]:checked").length > 0) {
+	                    $answerPanel.show();
+	                    $(".checkbox-choice").hide();
+	                    $(".radio-choice").show();
+	                } else {
+	                    $answerPanel.show();
+	                    $(".checkbox-choice").show();
+	                    $(".radio-choice").hide();
+	                }
+	                $("[name=CorrectAnswerIndexes]:hidden").removeAttr("checked");
+	            };
+	
+	            changeState(true);
+	            $questionTypes.change(changeState);
+	        }
 	    }]);
 
 	    return Logic;

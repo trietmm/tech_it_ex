@@ -1,0 +1,65 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+@using mti_tech_interview_examination.Models
+@using mti_tech_interview_examination.Common
+@model QuestionModel
+
+<form class="form-wrapper" id="QuestionFormWrapper" action="" method="post">
+    <div class="title-1">Register Question</div>
+    
+    <div id="QuestionForm">
+        <div class="form-line">
+            @Html.LabelFor(m => m.QuestionLevel) *<br />
+            <input type="radio" data-val-required-radio="Please select level" data-val="true" name="QuestionLevel" value="Easy" /><span>Easy</span>
+            <input type="radio" data-val-required-radio="Please select level" name="QuestionLevel" data-val="true" value="Normal" /><span>Normal</span>
+            <input type="radio" data-val-required-radio="Please select level" name="QuestionLevel" data-val="true" value="Hard" /><span>Hard</span>
+        </div>
+
+        <div class="form-line">
+            @Html.LabelFor(m => m.QuestionName) *
+            @Html.TextBoxFor(m => m.QuestionName, new { @class = "form-control" })
+        </div>
+        <div class="form-line">
+            @Html.LabelFor(m => m.QuestionContent) *
+            @Html.TextAreaFor(m => m.QuestionContent, new { @class = "form-control", rows=5 })
+        </div>
+        
+        <div class="form-line">
+            @Html.LabelFor(m => m.QuestionType) *<br />
+            <input type="radio" data-val-required-radio="Please select level"  data-val="true" name="QuestionType" value="Selection" checked="checked" /><span>Selection</span>
+            <input type="radio" data-val-required-radio="Please select level" name="QuestionType"  data-val="true" value="MultiSelection" /><span>MultiSelection</span>
+            <input type="radio" data-val-required-radio="Please select level" name="QuestionType"  data-val="true" value="Text" /><span>Text</span>
+        </div>
+        
+        <div id="AnswerPanel">
+            @for (int i = 0; i < Const.MaxAnswerCount; i++)
+            {
+                <div class="form-line">
+                    <label>Answer @i</label>
+                    <input type="text" name="AnswerContents" class="form-control" />
+                    <input type="checkbox" value="@i" name="CorrectAnswerIndexes" class="checkbox-choice" />
+                    <input type="radio" value="@i" name="CorrectAnswerIndexes" class="radio-choice" />
+                </div>
+            }            
+        </div>
+
+        <div class="text-right">
+            <input id="CancelButton" type="button" value="Back to list" onclick="javascript: location = '/Admin/ListQuestions';" class="btn btn-default btn-default" />
+            <input id="SubmitButton" type="submit" value="Register" class="btn btn-default btn-info" />
+        </div>
+    </div>
+
+</form>
+
+@section scripts{
+    <script>
+        $.validator.unobtrusive.adapters.addBool("required-radio", "required");
+        $(function () {
+            var admin = new Site.Logic();
+            admin.handleEvent();
+        })
+        
+    </script>
+}

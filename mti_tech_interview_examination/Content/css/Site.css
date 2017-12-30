@@ -1,4 +1,206 @@
+@import url(../css/bootstrap.min.css);
 body {
-  font-size: 13px; }
+  font-size: 14px;
+  background: #394959; }
+  body.landing-page {
+    background: url(/Content/img/bg.jpg) no-repeat 0 0;
+    background-size: cover; }
+  body.biz-page #Header {
+    height: 20px; }
+  body.biz-page #Logo img {
+    display: none; }
+  body.admin #Header {
+    height: 68px; }
+
+.form-line {
+  padding: 10px 0px; }
+
+.form-control {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  height: 40px; }
+  .form-control.input-validation-error {
+    border-color: #faa; }
+    .form-control.input-validation-error:focus {
+      border-color: #faa; }
+
+.floatleft {
+  float: left; }
+
+.floatright {
+  float: right; }
+
+input[type="radio"] {
+  vertical-align: top;
+  margin-top: 2px; }
+  input[type="radio"].input-validation-error {
+    box-shadow: 0px 0px 0px 1px #f99; }
+
+.form-wrapper {
+  background-color: #fff;
+  box-shadow: 0 1px 2px 0 rgba(153, 153, 153, 0.5);
+  border: solid 4px #eee;
+  border-radius: 4px; }
+
+.title-1 {
+  background: #394959;
+  font-size: 20px;
+  padding: 20px;
+  color: white;
+  border-bottom: 1px solid #eee; }
+
+/*#region Login*/
+#LoginFormWrapper {
+  width: 420px;
+  margin: 0 auto 0 auto; }
+  #LoginFormWrapper #LoginForm {
+    padding: 40px 50px 50px 50px; }
+    #LoginFormWrapper #LoginForm label {
+      display: inline-block; }
+    #LoginFormWrapper #LoginForm span {
+      display: inline-block;
+      padding: 0 10px 0 2px; }
+
+/*#endregion*/
+/*#region Register Candidate*/
+#CandidateFormWrapper {
+  width: 420px;
+  margin: 0 auto 0 auto; }
+  #CandidateFormWrapper #CandidateForm {
+    padding: 40px 50px 50px 50px; }
+    #CandidateFormWrapper #CandidateForm label {
+      display: inline-block; }
+    #CandidateFormWrapper #CandidateForm span {
+      display: inline-block;
+      padding: 0 10px 0 2px; }
+
+/*#endregion*/
+/*#region Start*/
+#StartFormWrapper {
+  width: 680px;
+  margin: 20px auto 0 auto; }
+  #StartFormWrapper #StartForm {
+    padding: 40px 50px 50px 50px; }
+
+/*#endregion*/
+/*#region Test*/
+#TestFormWrapper {
+  width: 1000px;
+  margin: 20px auto 0 auto; }
+  #TestFormWrapper #TestForm {
+    padding: 20px 40px 20px 40px; }
+  #TestFormWrapper .test-question {
+    box-shadow: 0px 0px 40px #eef;
+    padding: 20px 10px; }
+  #TestFormWrapper .test-answers {
+    margin-top: 20px; }
+  #TestFormWrapper .test-answer {
+    margin-top: 1px;
+    background: linear-gradient(#efefff, #e9eaeb, #efefef); }
+    #TestFormWrapper .test-answer .answer-check {
+      padding: 15px 0;
+      display: inline-block;
+      height: 100%;
+      width: 60px;
+      border-right: solid 1px #fff;
+      margin-bottom: 0;
+      text-align: center; }
+    #TestFormWrapper .test-answer .answer-text {
+      margin-left: 10px; }
+
+.button-panel {
+  box-shadow: 5px 8px 12px #112;
+  margin: 20px auto 10px auto;
+  width: 600px;
+  padding: 10px;
+  background: linear-gradient(#efefef, #fff, #efefef);
+  border-radius: 40px;
+  border: solid 4px #eee; }
+  .button-panel a {
+    display: inline-block;
+    line-height: 58px;
+    font-size: 58px;
+    text-shadow: 5px 8px 12px #558; }
+  .button-panel #MiddleInfo {
+    font-size: 12px;
+    display: inline-block;
+    width: 280px;
+    margin-left: 30%; }
+    .button-panel #MiddleInfo .question-number {
+      font-size: 44px;
+      font-weight: bold;
+      color: darkred; }
+    .button-panel #MiddleInfo .time-remaining {
+      float: right;
+      margin: 25px 10px 0 0; }
+
+/*#endregion*/
+/*#region Finish*/
+#FinishFormWrapper {
+  width: 460px;
+  margin: 20px auto 0 auto; }
+  #FinishFormWrapper #FinishForm {
+    padding: 30px; }
+
+/*#endregion*/
+/*#region Admin*/
+#QuestionForm {
+  padding: 40px; }
+  #QuestionForm .form-line span {
+    display: inline-block;
+    padding: 0 15px 0 2px; }
+
+#AnswerPanel input[type='text'] {
+  width: 90%;
+  display: inline-block; }
+
+#AnswerPanel input[type='radio'], #AnswerPanel input[type='checkbox'] {
+  vertical-align: middle; }
+
+/*#endregion*/
+#QuestionList {
+  padding: 0 40px 40px 40px; }
+  #QuestionList .question {
+    padding: 10px 0;
+    border-bottom: 1px dashed #aaa; }
+    #QuestionList .question:last-of-type {
+      border-bottom: none; }
+  #QuestionList .question-header {
+    position: relative; }
+    #QuestionList .question-header.easy {
+      color: #2a0; }
+    #QuestionList .question-header.normal {
+      color: orange; }
+    #QuestionList .question-header.hard {
+      color: #a00; }
+    #QuestionList .question-header a {
+      position: absolute;
+      right: 20px; }
+  #QuestionList .question-content {
+    padding: 10px 0; }
+  #QuestionList .question-type {
+    font-style: italic; }
+  #QuestionList .question-answers {
+    line-height: 24px;
+    padding-left: 20px;
+    font-size: 13px; }
+    #QuestionList .question-answers .question-answer.checked {
+      font-weight: bold; }
+
+.question-des {
+  padding: 20px 40px; }
+  .question-des .box, .question-des .green-box, .question-des .yellow-box, .question-des .red-box {
+    display: inline-block;
+    height: 20px;
+    width: 20px;
+    border-radius: 10px;
+    position: relative;
+    top: 5px; }
+  .question-des .green-box {
+    background-color: #2a0; }
+  .question-des .yellow-box {
+    background-color: orange; }
+  .question-des .red-box {
+    background-color: #a00; }
 
 /*# sourceMappingURL=Site.css.map */

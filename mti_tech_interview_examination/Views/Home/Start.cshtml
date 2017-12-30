@@ -1,0 +1,34 @@
+﻿@{
+    ViewBag.Title = "About";
+    ViewBag.IsLandingPage = true;
+}
+@model mti_tech_interview_examination.Models.CandidateModel
+@if (Model != null)
+{    
+    int hard = 0, normal = 0, easy = 0;
+    int total = mti_tech_interview_examination.Lib.Execute.Common.GetNumberQuestionByLevel(Model.Level, out hard, out normal, out easy);
+    string candidateName = Model.CandidateName;
+
+    
+    <form class="form-wrapper" id="StartFormWrapper" action="" method="post">
+        <div class="title-1">Are you ready?</div>
+
+        <div id="StartForm">
+            <div class="form-line">
+                <p>Hello <b>@candidateName</b>, welcome to <b>MTI Technology's Inteview Testing!</b></p>
+                <p>You will have <b>@total single/multi-choices</b> questions in total at this testing. </p>
+                <p>You will have <b>30 minutes</b> to complete all questions. </p>
+                <p>The time will be started when you click on <b>I'm ready!</b> button. </p>
+
+            </div>
+
+
+            <div class="text-right">
+                <input id="SubmitButton" type="submit" value="I'm ready!" class="btn btn-default btn-info" />
+            </div>
+        </div>
+
+    </form>
+}
+
+

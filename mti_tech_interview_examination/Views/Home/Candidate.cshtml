@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+    ViewBag.IsLandingPage = true;
+}
+
+@using mti_tech_interview_examination.Models
+@using mti_tech_interview_examination.Common
+@model CandidateModel
+
+<form class="form-wrapper" id="CandidateFormWrapper" action="" method="post">
+    <div class="title-1">Register candidate</div>
+    
+    <div id="CandidateForm">
+        <div class="form-line">
+            @Html.LabelFor(m => m.CandidateName) *
+            @Html.TextBoxFor(m => m.CandidateName, new { @class = "form-control" })
+
+        </div>
+        <div class="form-line">
+            @Html.LabelFor(m => m.CandidateBirthYear) * 
+            @Html.DropDownListFor(m => m.CandidateBirthYear, (new SelectList(new[] {
+            new { Value = "", Text = "-- Please select --" } }.Concat(Generator.BirthYears.Select(x => new { Value = x, Text = x })),
+            "Value", "Text")), new { @class = "form-control" })
+        </div>
+        <div class="form-line">
+            @Html.LabelFor(m => m.CvUrl)
+            @Html.TextBoxFor(m => m.CvUrl, new { @class = "form-control" })
+        </div>
+        <div class="form-line">
+            @Html.LabelFor(m => m.Level) *<br />
+            <input type="radio" data-val-required-radio="Please select level"  data-val="true" name="Level" value="Junior" /><span>Junior</span>
+            <input type="radio" data-val-required-radio="Please select level" name="Level"  data-val="true" value="Middle" /><span>Middle</span>
+            <input type="radio" data-val-required-radio="Please select level" name="Level"  data-val="true" value="Senior" /><span>Senior</span>
+        </div>
+
+        <div class="text-right">
+            <input id="SubmitButton" type="submit" value="Register" class="btn btn-default btn-info" />
+        </div>
+    </div>
+
+</form>
+
+@section scripts{
+    <script>
+        $.validator.unobtrusive.adapters.addBool("required-radio", "required");
+        
+    </script>
+}

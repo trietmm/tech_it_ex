@@ -1,0 +1,25 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+    ViewBag.ExtendedClass = "admin";
+}
+
+
+@model mti_tech_interview_examination.Models.NotificationModel
+
+<form class="form-wrapper" id="LoginFormWrapper" action="@Model.ButtonLink" method="get">
+    <div class="title-1">Notification</div>
+    
+    <div id="LoginForm">
+        <div class="form-line">
+            @Model.Message
+
+        </div>
+      
+
+        <div class="text-right">
+            <input id="SubmitButton" type="submit" value="@Model.ButtonText" class="btn btn-default btn-info" />
+        </div>
+    </div>
+
+</form>
+

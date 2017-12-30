@@ -35,12 +35,20 @@ namespace mti_tech_interview_examination.Lib.Execute
 
         public List<Mti_Question> ListQuestion()
         {
+<<<<<<< HEAD
             List<Mti_Question> ListResult = new List<Mti_Question>();
             using (var Context = new Interview_Examination_Context())
             {
                 ListResult = Context.Mti_Question.Include("Answer").ToList();
             }
             return ListResult;
+=======
+            using (var Context = new Interview_Examination_Context())
+            {
+                var questions = Context.Mti_Question.Include("Answers").OrderByDescending(q => q.Id).ToList();
+                return questions;
+            }
+>>>>>>> ef379d8a96c6550b2b31b6bbc77444c31d391de1
         }
 
     
@@ -56,6 +64,8 @@ namespace mti_tech_interview_examination.Lib.Execute
                     var lstProperty = typeof(Mti_Question).GetProperties();
                     foreach (var property in lstProperty)
                     {
+                        if (property.Name == "Id" || property.Name == "Answers")
+                            continue;
                         property.SetValue(QuestionInDB, property.GetValue(question));
                     }
                 }
@@ -75,6 +85,8 @@ namespace mti_tech_interview_examination.Lib.Execute
                         var lstProperty = typeof(Mti_Answer).GetProperties();
                         foreach (var property in lstProperty)
                         {
+                            if (property.Name == "Id" || property.Name.Contains("Question"))
+                                continue;
                             property.SetValue(answerDB, property.GetValue(answer));
                         }
                     }
@@ -90,12 +102,20 @@ namespace mti_tech_interview_examination.Lib.Execute
 
         public Mti_Question ViewQuestion(int id)
         {
+<<<<<<< HEAD
             Mti_Question result = null;
             using (var Context = new Interview_Examination_Context())
             {
                 result = Context.Mti_Question.Where(m => m.Id == id).FirstOrDefault();
             }
             return result;
+=======
+            using (var Context = new Interview_Examination_Context())
+            {
+                var question = Context.Mti_Question.Include("Answers").Where(q => q.Id == id).FirstOrDefault();
+                return question;
+            }
+>>>>>>> ef379d8a96c6550b2b31b6bbc77444c31d391de1
         }
 
 

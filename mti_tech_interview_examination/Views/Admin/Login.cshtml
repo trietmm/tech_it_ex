@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+    ViewBag.ExtendedClass = "admin";
+}
+
+@using mti_tech_interview_examination.Models
+@using mti_tech_interview_examination.Common
+@model LoginModel
+
+<form class="form-wrapper" id="LoginFormWrapper" action="" method="post">
+    <div class="title-1">Login</div>
+    
+    <div id="LoginForm">
+        <div class="form-line">
+            @Html.LabelFor(m => m.UserName) *
+            @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+
+        </div>
+
+        <div class="form-line">
+            @Html.LabelFor(m => m.Password) *
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+
+        </div>
+        
+
+        <div class="text-right">
+            <input id="SubmitButton" type="submit" value="Login" class="btn btn-default btn-info" />
+        </div>
+    </div>
+
+</form>
+

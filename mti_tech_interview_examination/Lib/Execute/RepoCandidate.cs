@@ -126,7 +126,7 @@ namespace mti_tech_interview_examination.Lib.Execute
             {
                 using (var context = new Interview_Examination_Context())
                 {
-                    var candidateDB = context.Mti_Candidate.Where(m => m.Id == candidate.Id);
+                    var candidateDB = context.Mti_Candidate.Where(m => m.Id == candidate.Id).FirstOrDefault();
 
                     if (candidateDB != null)
                     {
