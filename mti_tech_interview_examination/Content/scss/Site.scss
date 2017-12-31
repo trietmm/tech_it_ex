@@ -175,16 +175,22 @@ input[type="radio"] {
     background: linear-gradient(#efefef,#fff,#efefef);
     border-radius: 40px;
     border: solid 4px #eee;
-    position:fixed;
-    bottom:40px;
-    left:50%;
-    margin-left:-300px;
+    position: fixed;
+    bottom: 40px;
+    left: 50%;
+    margin-left: -300px;
+    #ButtonRight{
+        text-align:right;
+    }
+    #ButtonFinish{
+        display:none;
+    }
     a {
         display: inline-block;
         line-height: 58px;
         font-size: 40px;
         text-shadow: 5px 8px 12px #558;
-        width:110px;
+        width: 110px;
     }
 
     #MiddleInfo {
@@ -204,6 +210,16 @@ input[type="radio"] {
             margin: 25px 10px 0 0;
         }
     }
+
+    &.end {
+        #ButtonRight {
+            display: none;
+        }
+
+        #ButtonFinish{
+            display:inline-block;
+        }
+    }
 }
 /*#endregion*/
 
@@ -214,7 +230,7 @@ input[type="radio"] {
     margin: 20px auto 0 auto;
 
     #FinishForm {
-        padding: 30px;
+        padding: 30px 30px 10px 30px;
     }
 }
 /*#endregion*/

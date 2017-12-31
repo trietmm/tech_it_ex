@@ -1,16 +1,9 @@
-﻿import { Api } from "./Site.Api";
-
-export class Logic {
+﻿export class Logic {
     constructor() {
         this.currentQuestionIndex = 0;
         this.remainingTime = 0;
-        this.api = new Api();
     }
     
-    render() {
-        let api = new Api();
-        api.loadQuestions(); 
-    }
     //
     // Used to handle events in Test screen
     //
@@ -28,8 +21,10 @@ export class Logic {
         let $allQuestions = $(".question");
         let $buttonLeft = $("#ButtonLeft");
         let $buttonRight = $("#ButtonRight");
+        let $buttonFinish = $("#ButtonFinish");
         let $timeRemaining = $("#TimeRemaining");
         let $questionNumber = $("#QuestionNumber");
+        let $buttonPanel = $(".button-panel");
 
         let questionCount = parseInt($("#QuestionCount").val());
         
@@ -41,11 +36,10 @@ export class Logic {
             $allQuestions.filter("#Question" + _this.currentQuestionIndex).show();
             $questionNumber.html((_this.currentQuestionIndex + 1) + "/" + questionCount);
             if (_this.currentQuestionIndex == questionCount - 1) {
-                //Change right button to Finish button
-                $buttonRight.html("Finish");
+                $buttonPanel.addClass("end");
             }
             else {
-                $buttonRight.html("<span class='glyphicon glyphicon-chevron-right'></span>");
+                $buttonPanel.removeClass("end");
             }
         };
 
@@ -78,8 +72,20 @@ export class Logic {
                 goToQuestionIndex: goToQuestionIndex
             };
 
-            //Save
-            _this.api.saveAnswer(saveObj);
+            //Save            
+            $.ajax({
+                type: "POST",
+                url: "/Home/SaveAnswer",
+                data: saveObj,
+                success: function (data) {
+
+                    //If the test is done, we redirect to Finish page
+                    if (data == "done") {
+                        location = "Finish";
+                    }
+                }
+            });
+            
         };
 
         //Next function
@@ -114,12 +120,14 @@ export class Logic {
                 $timeRemaining.html(`<span style='font-weight:bold; color: red'>Time is up!</span>`);
                 $buttonLeft.unbind("click");
                 $buttonRight.unbind("click");
+                $buttonFinish.unbind("click");
             }
         }
 
         //Initialize event
         $buttonLeft.click(prevQuestion);
         $buttonRight.click(nextQuestion);
+        $buttonFinish.click(nextQuestion);
         timer = setInterval(updateTime, 1000);
         changeQuestion();
         updateTime();

@@ -3,16 +3,18 @@
     ViewBag.IsLandingPage = true;
 }
 
-<form class="form-wrapper" id="FinishFormWrapper" action="" method="post">
+<div class="form-wrapper" id="FinishFormWrapper" action="" method="post">
     <div class="title-1">Congratulation! You have finished your test.</div>
 
     <div id="FinishForm">
         <div class="form-line">            
             <p>Your test result will be check by admin. </p>
             <p>Thank you for take time to complete this test. </p>
-            
+            <div style="font-size:10px; font-style:italic; color: #888; text-align:right; margin-top:20px">If you are admin, you can close this session by clicking on 
+            <form action="/Home/LogOff" style="display:inline-block" method="post"><a href="javascript:$('form').submit()">this link</a></form>
+            </div>
         </div>
     </div>
 
-</form>
+</div>
 

@@ -63,6 +63,7 @@ namespace mti_tech_interview_examination.Controllers
         [HttpPost]
         public ActionResult LogOff()
         {
+            Session.Clear();
             FormsAuthentication.SignOut();
             return RedirectToAction("Login");
         }
@@ -186,12 +187,10 @@ namespace mti_tech_interview_examination.Controllers
                     if (question != null)
                     {
                         //Save candidate index for unexpected tab closing
-                        candidate.QuestionIndex = gotoQuestionIndex < 0 ? 0 : (gotoQuestionIndex >= candidate.Questions.Count ? candidate.Questions.Count - 1 : gotoQuestionIndex);
-                        if (question.QuestionType == CommonModel.QuestionType.Text)
-                        {
-                            question.AnswerText = value;
-                        }
-                        else if(question.QuestionType == CommonModel.QuestionType.Selection)
+                        candidate.QuestionIndex = gotoQuestionIndex < 0 ? 0 : (gotoQuestionIndex >= candidate.Questions.Count ? candidate.Questions.Count - 1 : gotoQuestionIndex);                        
+                        question.AnswerText = value;
+
+                        if(question.QuestionType == CommonModel.QuestionType.Selection)
                         {
                             //Reset all selection
                             question.ListAnswer.ForEach(i => i.IsSelected = false);
@@ -201,7 +200,7 @@ namespace mti_tech_interview_examination.Controllers
                             if (ans != null)
                                 ans.IsSelected = true;
                         }
-                        else
+                        else if (question.QuestionType == CommonModel.QuestionType.MultiSelection)
                         {
                             //Reset all selection
                             question.ListAnswer.ForEach(i => i.IsSelected = false);
@@ -214,8 +213,29 @@ namespace mti_tech_interview_examination.Controllers
                             if (ansList != null)
                                 ansList.ForEach(a => a.IsSelected = true);
                         }
+
+                        //Finish state
+                        if(gotoQuestionIndex >= candidate.Questions.Count)
+                        {
+                            List<Mti_Candidate_Question> candiateAnswerList = new List<Mti_Candidate_Question>();
+                            foreach(var ques in candidate.Questions)
+                            {
+                                var candidateAns = new Mti_Candidate_Question
+                                {
+                                    CandidateId = candidate.Id,
+                                    QuestionId = ques.QuestionId,
+                                    CandidateAnswer = ques.AnswerText
+                                };
+                                candiateAnswerList.Add(candidateAns);
+                            }
+                            RepoCandidate repo = new RepoCandidate();                            
+                            repo.CandidateAnswer(candiateAnswerList);
+
+                            //Return the flag to redirect to finish page
+                            return Json("done", JsonRequestBehavior.AllowGet);
+                        }
                     }
-                    candidate.StartedTime = DateTime.Now;
+                    
                     return Json(true, JsonRequestBehavior.AllowGet);
                 }
             }

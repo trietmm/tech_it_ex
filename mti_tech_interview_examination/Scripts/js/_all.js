@@ -43,14 +43,6 @@ var Site =
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	__webpack_require__(1);
-	module.exports = __webpack_require__(2);
-
-
-/***/ }),
-/* 1 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -63,70 +55,20 @@ var Site =
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	var Api = exports.Api = function () {
-	    function Api() {
-	        _classCallCheck(this, Api);
-	    }
-	
-	    _createClass(Api, [{
-	        key: "loadQuestions",
-	        value: function loadQuestions() {
-	            console.log("load questions!");
-	        }
-	    }, {
-	        key: "saveAnswer",
-	        value: function saveAnswer(saveObj) {
-	            $.ajax({
-	                type: "POST",
-	                url: "/Home/SaveAnswer",
-	                data: saveObj,
-	                success: function success(msg) {
-	                    console.log(msg);
-	                }
-	            });
-	        }
-	    }]);
-
-	    return Api;
-	}();
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.Logic = undefined;
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _Site = __webpack_require__(1);
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
 	var Logic = exports.Logic = function () {
 	    function Logic() {
 	        _classCallCheck(this, Logic);
 	
 	        this.currentQuestionIndex = 0;
 	        this.remainingTime = 0;
-	        this.api = new _Site.Api();
 	    }
 	
-	    _createClass(Logic, [{
-	        key: "render",
-	        value: function render() {
-	            var api = new _Site.Api();
-	            api.loadQuestions();
-	        }
-	        //
-	        // Used to handle events in Test screen
-	        //
+	    //
+	    // Used to handle events in Test screen
+	    //
 	
-	    }, {
+	
+	    _createClass(Logic, [{
 	        key: "handleQuestionTestEvent",
 	        value: function handleQuestionTestEvent(setting) {
 	
@@ -142,8 +84,10 @@ var Site =
 	            var $allQuestions = $(".question");
 	            var $buttonLeft = $("#ButtonLeft");
 	            var $buttonRight = $("#ButtonRight");
+	            var $buttonFinish = $("#ButtonFinish");
 	            var $timeRemaining = $("#TimeRemaining");
 	            var $questionNumber = $("#QuestionNumber");
+	            var $buttonPanel = $(".button-panel");
 	
 	            var questionCount = parseInt($("#QuestionCount").val());
 	
@@ -154,10 +98,9 @@ var Site =
 	                $allQuestions.filter("#Question" + _this.currentQuestionIndex).show();
 	                $questionNumber.html(_this.currentQuestionIndex + 1 + "/" + questionCount);
 	                if (_this.currentQuestionIndex == questionCount - 1) {
-	                    //Change right button to Finish button
-	                    $buttonRight.html("Finish");
+	                    $buttonPanel.addClass("end");
 	                } else {
-	                    $buttonRight.html("<span class='glyphicon glyphicon-chevron-right'></span>");
+	                    $buttonPanel.removeClass("end");
 	                }
 	            };
 	
@@ -192,8 +135,19 @@ var Site =
 	                    goToQuestionIndex: goToQuestionIndex
 	                };
 	
-	                //Save
-	                _this.api.saveAnswer(saveObj);
+	                //Save            
+	                $.ajax({
+	                    type: "POST",
+	                    url: "/Home/SaveAnswer",
+	                    data: saveObj,
+	                    success: function success(data) {
+	
+	                        //If the test is done, we redirect to Finish page
+	                        if (data == "done") {
+	                            location = "Finish";
+	                        }
+	                    }
+	                });
 	            };
 	
 	            //Next function
@@ -224,12 +178,14 @@ var Site =
 	                    $timeRemaining.html("<span style='font-weight:bold; color: red'>Time is up!</span>");
 	                    $buttonLeft.unbind("click");
 	                    $buttonRight.unbind("click");
+	                    $buttonFinish.unbind("click");
 	                }
 	            };
 	
 	            //Initialize event
 	            $buttonLeft.click(prevQuestion);
 	            $buttonRight.click(nextQuestion);
+	            $buttonFinish.click(nextQuestion);
 	            timer = setInterval(updateTime, 1000);
 	            changeQuestion();
 	            updateTime();

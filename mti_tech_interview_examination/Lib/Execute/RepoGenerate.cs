@@ -58,7 +58,8 @@ namespace mti_tech_interview_examination.Lib.Execute
                 var questionDB = lstQuestionDB.Where(m => m.Id == questionId).FirstOrDefault();
                 if (questionDB != null && questionDB.QuestionType == Models.CommonModel.QuestionType.Text)
                 {
-                    candidateQuestion.IsRight = true;
+                    //Not specify the answer is true or not at this time
+                    candidateQuestion.IsRight = null;
                 }
                 else
                 {
