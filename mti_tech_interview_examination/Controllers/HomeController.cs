@@ -170,6 +170,62 @@ namespace mti_tech_interview_examination.Controllers
         }
 
         /// <summary>
+        /// Save answer
+        /// </summary>
+        /// <param name="questionId"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public JsonResult SaveAnswer(int questionId, string value, int gotoQuestionIndex)
+        {
+            try
+            {
+                CandidateModel candidate = Session[SessionKey.Candidate] as CandidateModel;
+                if (candidate != null && candidate.Questions != null)
+                {                
+                    var question = candidate.Questions.FirstOrDefault(q => q.QuestionId == questionId);
+                    if (question != null)
+                    {
+                        //Save candidate index for unexpected tab closing
+                        candidate.QuestionIndex = gotoQuestionIndex < 0 ? 0 : (gotoQuestionIndex >= candidate.Questions.Count ? candidate.Questions.Count - 1 : gotoQuestionIndex);
+                        if (question.QuestionType == CommonModel.QuestionType.Text)
+                        {
+                            question.AnswerText = value;
+                        }
+                        else if(question.QuestionType == CommonModel.QuestionType.Selection)
+                        {
+                            //Reset all selection
+                            question.ListAnswer.ForEach(i => i.IsSelected = false);
+
+                            //Check the selected value
+                            var ans = question.ListAnswer.Where(a => a.AnswerId == int.Parse(value.Trim())).FirstOrDefault();
+                            if (ans != null)
+                                ans.IsSelected = true;
+                        }
+                        else
+                        {
+                            //Reset all selection
+                            question.ListAnswer.ForEach(i => i.IsSelected = false);
+
+                            //Split value to multi values
+                            int[] values = value.Split(',').Select(s => int.Parse(s.Trim())).ToArray();
+
+                            //Check the selected values
+                            var ansList = question.ListAnswer.Where(a => values.Contains(a.AnswerId)).ToList();
+                            if (ansList != null)
+                                ansList.ForEach(a => a.IsSelected = true);
+                        }
+                    }
+                    candidate.StartedTime = DateTime.Now;
+                    return Json(true, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+            return Json(false, JsonRequestBehavior.AllowGet);
+        }
+        /// <summary>
         /// Go to Finish screen
         /// </summary>
         /// <returns></returns>

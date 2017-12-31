@@ -2,53 +2,65 @@
     ViewBag.Title = "Contact";
 }
 @using mti_tech_interview_examination.Models
+@using mti_tech_interview_examination.Common
+
 @model CandidateModel
 @if (Model != null)
 {
-    <form class="form-wrapper" id="TestFormWrapper" action="" method="post">
+    List<int> Ids = Enumerable.Range(0, Const.MaxAnswerCount).ToList();
+    List<int> randomIds = new List<int>();
+    Random random = new Random();
+    while(Ids.Count > 0)
+    {
+        int popIndex = random.Next(Ids.Count);
+        int popId = Ids[popIndex];
+        randomIds.Add(popId);
+        Ids.RemoveAt(popIndex);
+    }
+    var questions = Model.Questions;
 
+
+<div class="test-container">    
+    <form class="form-wrapper" id="TestFormWrapper" action="" method="post">
         <div id="TestForm">
-            <div class="test-item">
+            <input type="hidden" value="@questions.Count" id="QuestionCount"/>
+            @for(int i = 0; i < questions.Count; i++)
+            {
+                var question = questions[i];
+            <div class="test-item question" id="Question@(i)" >
                 <div class="test-question">
-                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec?
+                    <label>Question @(i + 1)</label>: @question.QuestionText
+                    <input type="hidden" class="question-id" value="@question.QuestionId"/>
+                    <input type="hidden" class="question-type" value="@question.QuestionType" />
                 </div>
                 <div class="test-answers">
-                    <div class="test-answer">
-                        <label class="answer-check" for="abc">A <input type="radio" value="" id="abc" /> </label>
-                        <span class="answer-text">Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.</span>
-                    </div>
-                    <div class="test-answer">
-                        <div class="test-answer">
-                            <label class="answer-check" for="abc">A <input type="radio" value="" id="abc" /> </label>
-                            <span class="answer-text">Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi.</span>
-                        </div>
-
-                    </div>
-                    <div class="test-answer">
-                        <div class="test-answer">
-                            <label class="answer-check" for="abc">A <input type="radio" value="" id="abc" /> </label>
-                            <span class="answer-text">Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc</span>
-                        </div>
-
-                    </div>
-                    <div class="test-answer">
-                        <div class="test-answer">
-                            <label class="answer-check" for="abc">A <input type="radio" value="" id="abc" /> </label>
-                            <span class="answer-text">Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi.</span>
-                        </div>
-
-                    </div>
-                    <div class="test-answer">
-                        <div class="test-answer">
-                            <label class="answer-check" for="abc">A <input type="radio" value="" id="abc" /> </label>
-                            <span class="answer-text">Duis leo. Sed fringilla mauris sit amet nibh</span>
-                        </div>
-
-                    </div>
+                    @if (question.QuestionType != CommonModel.QuestionType.Text)
+                    {
+                        string inputType = question.QuestionType == CommonModel.QuestionType.Selection ? "radio" : "checkbox";
+                        for (int j = 0; j < Const.MaxAnswerCount; j++)
+                        {
+                            var ans = question.ListAnswer[randomIds[j]];
+                            var isCheck = ans.IsSelected == true ? "checked='checked'" : string.Empty;
+                            if (string.IsNullOrWhiteSpace(ans.Text))
+                            {
+                                continue;
+                            }
+                            <div class="test-answer">
+                                <label class="answer-check" for="Ans@(ans.AnswerId)">@((char)(j + 65)) 
+                                <input type="@inputType" class="question-answer" value="@ans.AnswerId" @isCheck id="Ans@(ans.AnswerId)" name="Ans@(question.QuestionId)" /> </label>
+                                <span class="answer-text">@ans.Text</span>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <label>Answer: </label>
+                        <input type="text" class="question-answer" id="Ans@(question.QuestionId)" name="Ans@(question.QuestionId)" value="@(question.AnswerText)"/>
+                    }
 
                 </div>
             </div>
-
+            }
         </div>
 
 
@@ -56,21 +68,26 @@
     </form>
 
     <div class="button-panel">
-        <a id="ButtonLeft" class="floatleft" href=""><span class="glyphicon glyphicon-chevron-left"></span></a>
+        <a id="ButtonLeft" class="floatleft" href="javascript:void()"><span class="glyphicon glyphicon-chevron-left"></span></a>
         <div id="MiddleInfo">
-            <span class="question-number">8/20</span>
-            <span class="time-remaining">Time remaining: <b>12:30</b></span>
+            <span class="question-number" id="QuestionNumber">8/20</span>
+            <span class="time-remaining" id="TimeRemaining">Time remaining: <b>12:30</b></span>
         </div>
-        <a id="ButtonRight" class="floatright" href=""><span class="glyphicon glyphicon-chevron-right"></span></a>
+        <a id="ButtonRight" class="floatright" href="javascript:void()"><span class="glyphicon glyphicon-chevron-right"></span></a>
         <div class="clearfix"></div>
     </div>
-}
+</div>
+    @section scripts{
+        <script>
 
-
-@section scripts{
-    <script>
-
-        var a = new Site.Logic();
-        a.render();
-    </script>
+            var logic = new Site.Logic();
+            var setting = {
+                TotalTime: @(Config.TotalTime),
+                StartedTime: new Date("@(Model.StartedTime.ToString("yyyy-MM-ddTHH:mm:ss"))"),
+                QuestionNumber: @(Model.Questions.Count),
+                QuestionIndex: @(Model.QuestionIndex)
+            };
+            logic.handleQuestionTestEvent(setting);
+        </script>
+    }
 }

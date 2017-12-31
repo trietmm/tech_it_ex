@@ -26,9 +26,7 @@
             @Html.RadioButtonFor(m => m.QuestionLevel, CommonModel.QuestionLevel.Easy, new Dictionary<string, string> { { "data-val-required-radio", "Please select level" }, { "data-val", "true" }})<span>Easy</span>
             @Html.RadioButtonFor(m => m.QuestionLevel, CommonModel.QuestionLevel.Normal, new Dictionary<string, string> { { "data-val-required-radio", "Please select level" }, { "data-val", "true" }})<span>Normal</span>
             @Html.RadioButtonFor(m => m.QuestionLevel, CommonModel.QuestionLevel.Hard, new Dictionary<string, string> { { "data-val-required-radio", "Please select level" }, { "data-val", "true" }})<span>Hard</span>
-            @*<input type="radio" data-val-required-radio="Please select level" data-val="true" name="QuestionLevel" value="Easy" /><span>Easy</span>
-            <input type="radio" data-val-required-radio="Please select level" name="QuestionLevel" data-val="true" value="Normal" /><span>Normal</span>
-            <input type="radio" data-val-required-radio="Please select level" name="QuestionLevel" data-val="true" value="Hard" /><span>Hard</span>*@
+            
         </div>
 
         <div class="form-line">
@@ -46,9 +44,6 @@
             @Html.RadioButtonFor(m => m.QuestionType, CommonModel.QuestionType.MultiSelection, new Dictionary<string, string> { { "data-val-required-radio", "Please select type" }, { "data-val", "true" }})<span>MultiSelection</span>
             @Html.RadioButtonFor(m => m.QuestionType, CommonModel.QuestionType.Text, new Dictionary<string, string> { { "data-val-required-radio", "Please select type" }, { "data-val", "true" }})<span>Text</span>
 
-            @*<input type="radio" data-val-required-radio="Please select level"  data-val="true" name="QuestionType" value="Selection" checked="checked" /><span>Selection</span>
-            <input type="radio" data-val-required-radio="Please select level" name="QuestionType"  data-val="true" value="MultiSelection" /><span>MultiSelection</span>
-            <input type="radio" data-val-required-radio="Please select level" name="QuestionType"  data-val="true" value="Text" /><span>Text</span>*@
         </div>
         
         <div id="AnswerPanel">
@@ -90,7 +85,7 @@
         $.validator.unobtrusive.adapters.addBool("required-radio", "required");
         $(function () {
             var admin = new Site.Logic();
-            admin.handleEvent();
+            admin.handleQuestionUpdateEvent();
         })
         
     </script>

@@ -15,10 +15,11 @@
             <span class="red-box" style="margin-left:20px"></span> Hard
         </div>
         <div id="QuestionList">
-            @foreach (var question in Model)
-                {
-                    var answerType = question.QuestionType == CommonModel.QuestionType.Selection ? "radio" : (question.QuestionType == CommonModel.QuestionType.MultiSelection ? "checkbox" : "text");
-                <div class="question">
+            @for(int i = 0; i< Model.Count; i++)
+            {
+                var question = Model[i];
+                var answerType = question.QuestionType == CommonModel.QuestionType.Selection ? "radio" : (question.QuestionType == CommonModel.QuestionType.MultiSelection ? "checkbox" : "text");
+                <div class="question" id="Ques@(i)">
                     <div class="question-header @question.QuestionLevel.ToString().ToLower()">
                         <label class="question-name ">(@question.Id) @question.QuestionName</label>
                         <span class="question-type"> < @question.QuestionType > </span>
@@ -64,7 +65,7 @@
         
         $(function () {
             var admin = new Site.Logic();
-            admin.handleEvent();
+            //admin.handleEvent();
         })
         
     </script>

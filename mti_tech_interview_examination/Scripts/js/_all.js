@@ -73,6 +73,18 @@ var Site =
 	        value: function loadQuestions() {
 	            console.log("load questions!");
 	        }
+	    }, {
+	        key: "saveAnswer",
+	        value: function saveAnswer(saveObj) {
+	            $.ajax({
+	                type: "POST",
+	                url: "/Home/SaveAnswer",
+	                data: saveObj,
+	                success: function success(msg) {
+	                    console.log(msg);
+	                }
+	            });
+	        }
 	    }]);
 
 	    return Api;
@@ -98,6 +110,10 @@ var Site =
 	var Logic = exports.Logic = function () {
 	    function Logic() {
 	        _classCallCheck(this, Logic);
+	
+	        this.currentQuestionIndex = 0;
+	        this.remainingTime = 0;
+	        this.api = new _Site.Api();
 	    }
 	
 	    _createClass(Logic, [{
@@ -106,35 +122,168 @@ var Site =
 	            var api = new _Site.Api();
 	            api.loadQuestions();
 	        }
+	        //
+	        // Used to handle events in Test screen
+	        //
+	
 	    }, {
-	        key: "handleEvent",
-	        value: function handleEvent() {
+	        key: "handleQuestionTestEvent",
+	        value: function handleQuestionTestEvent(setting) {
+	
+	            var totalTime = setting.TotalTime;
+	            var questionNumber = setting.QuestionNumber;
+	            var startedTime = setting.StartedTime;
+	            this.currentQuestionIndex = setting.QuestionIndex;
+	
+	            var startedDateTime = new Date(startedTime);
+	            this.remainingTime = totalTime * 60 - (new Date() - startedDateTime) / 1000;
+	
+	            //Cached dom
+	            var $allQuestions = $(".question");
+	            var $buttonLeft = $("#ButtonLeft");
+	            var $buttonRight = $("#ButtonRight");
+	            var $timeRemaining = $("#TimeRemaining");
+	            var $questionNumber = $("#QuestionNumber");
+	
+	            var questionCount = parseInt($("#QuestionCount").val());
+	
+	            var _this = this;
+	            //Method for displaying question
+	            var changeQuestion = function changeQuestion() {
+	                $allQuestions.hide();
+	                $allQuestions.filter("#Question" + _this.currentQuestionIndex).show();
+	                $questionNumber.html(_this.currentQuestionIndex + 1 + "/" + questionCount);
+	                if (_this.currentQuestionIndex == questionCount - 1) {
+	                    //Change right button to Finish button
+	                    $buttonRight.html("Finish");
+	                } else {
+	                    $buttonRight.html("<span class='glyphicon glyphicon-chevron-right'></span>");
+	                }
+	            };
+	
+	            //Save answer
+	            var saveAnswer = function saveAnswer(goToQuestionIndex) {
+	                var $currentQuestion = $allQuestions.filter("#Question" + _this.currentQuestionIndex);
+	                var questionId = $currentQuestion.find(".question-id").val();
+	                var questionType = $currentQuestion.find(".question-type").val();
+	                var $inputs = $currentQuestion.find(".question-answer");
+	                var value = "";
+	
+	                //Case Text 
+	                if (questionType == "Text") {
+	                    value = $inputs.val();
+	                }
+	
+	                //Case selection
+	                else if (questionType == "Selection") {
+	                        value = $inputs.filter(":checked").val();
+	                    }
+	
+	                    //Case Multi-selection
+	                    else {
+	                            value = $inputs.filter(":checked").map(function () {
+	                                return this.value;
+	                            }).get().join(",");
+	                        }
+	
+	                var saveObj = {
+	                    value: value,
+	                    questionId: questionId,
+	                    goToQuestionIndex: goToQuestionIndex
+	                };
+	
+	                //Save
+	                _this.api.saveAnswer(saveObj);
+	            };
+	
+	            //Next function
+	            var nextQuestion = function nextQuestion() {
+	                saveAnswer(_this.currentQuestionIndex + 1);
+	                if (_this.currentQuestionIndex < questionCount - 1) {
+	                    _this.currentQuestionIndex++;
+	                    changeQuestion();
+	                }
+	            };
+	
+	            //Prev function
+	            var prevQuestion = function prevQuestion() {
+	                saveAnswer(_this.currentQuestionIndex - 1);
+	                if (_this.currentQuestionIndex > 0) {
+	                    _this.currentQuestionIndex--;
+	                    changeQuestion();
+	                }
+	            };
+	
+	            //Time
+	            var timer = null;
+	            var updateTime = function updateTime() {
+	                $timeRemaining.html("Time remaining: <b>\n                " + ((_this.remainingTime / 60).toFixed(0) + "").padStart(2, 0) + ":\n                " + ((_this.remainingTime % 60).toFixed(0) + "").padStart(2, 0) + "</b>");
+	
+	                if (_this.remainingTime > 0) _this.remainingTime--;else {
+	                    clearInterval(timer);
+	                    $timeRemaining.html("<span style='font-weight:bold; color: red'>Time is up!</span>");
+	                    $buttonLeft.unbind("click");
+	                    $buttonRight.unbind("click");
+	                }
+	            };
+	
+	            //Initialize event
+	            $buttonLeft.click(prevQuestion);
+	            $buttonRight.click(nextQuestion);
+	            timer = setInterval(updateTime, 1000);
+	            changeQuestion();
+	            updateTime();
+	        }
+	
+	        //
+	        // Used to handle create/update question in admin
+	        //
+	
+	    }, {
+	        key: "handleQuestionUpdateEvent",
+	        value: function handleQuestionUpdateEvent() {
+	
+	            //Cached query for refer later
 	            var $questionTypes = $("[name=QuestionType]");
 	            var $answerPanel = $("#AnswerPanel");
+	            var $checkboxChoice = $(".checkbox-choice");
+	            var $radioChoice = $(".radio-choice");
+	            var $correctAnswerIndexes = $("[name=CorrectAnswerIndexes]");
 	
 	            $answerPanel.show();
-	            $(".checkbox-choice").hide();
-	            $(".radio-choice").show();
+	            $radioChoice.show();
+	            $checkboxChoice.hide();
 	
 	            var changeState = function changeState() {
 	                var isInit = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
 	
 	
+	                //Case text, we will hide checkbox or radio answer
 	                if ($questionTypes.filter("[value=Text]:checked").length > 0) {
 	                    $answerPanel.hide();
-	                } else if ($questionTypes.filter("[value=Selection]:checked").length > 0) {
-	                    $answerPanel.show();
-	                    $(".checkbox-choice").hide();
-	                    $(".radio-choice").show();
-	                } else {
-	                    $answerPanel.show();
-	                    $(".checkbox-choice").show();
-	                    $(".radio-choice").hide();
 	                }
-	                $("[name=CorrectAnswerIndexes]:hidden").removeAttr("checked");
+	
+	                //Case Selection, hide checkbox, show radio
+	                else if ($questionTypes.filter("[value=Selection]:checked").length > 0) {
+	                        $answerPanel.show();
+	                        $checkboxChoice.hide();
+	                        $radioChoice.show();
+	                    }
+	                    //Case Multi-Selection, show checkbox, hide radio
+	                    else {
+	                            $answerPanel.show();
+	                            $checkboxChoice.show();
+	                            $radioChoice.hide();
+	                        }
+	
+	                //When we select other question types, we uncheck all previous answer selection
+	                $correctAnswerIndexes.filter(":hidden").removeAttr("checked");
 	            };
 	
+	            //Call the method in intial state
 	            changeState(true);
+	
+	            //Set change event for selectbox QuestionTypes
 	            $questionTypes.change(changeState);
 	        }
 	    }]);

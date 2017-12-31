@@ -125,6 +125,11 @@ input[type="radio"] {
 /*#endregion*/
 
 /*#region Test*/
+.test-container {
+    position:relative;
+    min-height:500px;
+    padding-bottom:145px;
+}
 #TestFormWrapper {
     width: 1000px;
     margin: 20px auto 0 auto;
@@ -164,26 +169,29 @@ input[type="radio"] {
 
 .button-panel {
     box-shadow: 5px 8px 12px #112;
-    margin: 20px auto 10px auto;
+    margin: 0 auto;
     width: 600px;
     padding: 10px;
     background: linear-gradient(#efefef,#fff,#efefef);
     border-radius: 40px;
     border: solid 4px #eee;
-
-
+    position:fixed;
+    bottom:40px;
+    left:50%;
+    margin-left:-300px;
     a {
         display: inline-block;
         line-height: 58px;
-        font-size: 58px;
+        font-size: 40px;
         text-shadow: 5px 8px 12px #558;
+        width:110px;
     }
 
     #MiddleInfo {
         font-size: 12px;
         display: inline-block;
-        width: 280px;
-        margin-left: 30%;
+        width: 210px;
+        margin-left: 130px;
 
         .question-number {
             font-size: 44px;
