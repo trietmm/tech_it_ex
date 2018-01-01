@@ -6,6 +6,7 @@ using System.Web;
 using mti_tech_interview_examination.Models.Entity;
 using mti_tech_interview_examination.Models.Response;
 using System.Linq.Expressions;
+using mti_tech_interview_examination.Models;
 
 namespace mti_tech_interview_examination.Lib.Execute
 {
@@ -35,23 +36,30 @@ namespace mti_tech_interview_examination.Lib.Execute
 
         public List<Mti_Question> ListQuestion()
         {
-<<<<<<< HEAD
             List<Mti_Question> ListResult = new List<Mti_Question>();
             using (var Context = new Interview_Examination_Context())
             {
-                ListResult = Context.Mti_Question.Include("Answer").ToList();
+                ListResult = Context.Mti_Question.Include("Answers").OrderByDescending(q => q.Id).ToList();
             }
             return ListResult;
-=======
-            using (var Context = new Interview_Examination_Context())
-            {
-                var questions = Context.Mti_Question.Include("Answers").OrderByDescending(q => q.Id).ToList();
-                return questions;
-            }
->>>>>>> ef379d8a96c6550b2b31b6bbc77444c31d391de1
         }
 
-    
+        public List<Mti_Question> ListQuestion(int Page, out int TotalNumber)
+        {
+            List<Mti_Question> ListResult = new List<Mti_Question>();
+            using (var Context = new Interview_Examination_Context())
+            {
+                var query = Context.Mti_Question.Include("Answers");
+                var page = query.OrderByDescending(p => p.Id)
+                                .Skip((Page - 1) * CommonModel.PageNumber).Take(CommonModel.PageNumber)
+                                .GroupBy(p => new { Total = query.Count() })
+                                .First();
+                TotalNumber = page.Key.Total;
+                ListResult = page.Select(p => p).ToList();
+            }
+            return ListResult;
+        }
+
 
         public void UpdateQuestion(Mti_Question question, List<Mti_Answer> lstAnswer)
         {
@@ -102,23 +110,13 @@ namespace mti_tech_interview_examination.Lib.Execute
 
         public Mti_Question ViewQuestion(int id)
         {
-<<<<<<< HEAD
             Mti_Question result = null;
             using (var Context = new Interview_Examination_Context())
             {
-                result = Context.Mti_Question.Where(m => m.Id == id).FirstOrDefault();
+                result = Context.Mti_Question.Include("Answers").Where(q => q.Id == id).FirstOrDefault();
             }
             return result;
-=======
-            using (var Context = new Interview_Examination_Context())
-            {
-                var question = Context.Mti_Question.Include("Answers").Where(q => q.Id == id).FirstOrDefault();
-                return question;
-            }
->>>>>>> ef379d8a96c6550b2b31b6bbc77444c31d391de1
         }
-
-
     }
 
 }

@@ -14,6 +14,7 @@ namespace mti_tech_interview_examination.Lib.Interface
         void UpdateQuestion(Mti_Question question, List<Mti_Answer> lstAnswer);
         void DeleteQuestion(int idQuestion);
         List<Mti_Question> ListQuestion();
+        List<Mti_Question> ListQuestion(int Page, out int TotalNumber);
         Mti_Question ViewQuestion(int id);
     }
 }

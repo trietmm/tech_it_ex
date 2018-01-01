@@ -27,5 +27,7 @@ namespace mti_tech_interview_examination.Models
             Middle = 1,
             Senior = 2
         }
+
+        public const int PageNumber = 30;
     }
 }
