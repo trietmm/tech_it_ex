@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 
@@ -29,6 +30,17 @@ namespace mti_tech_interview_examination.Common
         /// User name
         /// </summary>
         public const string UserName = "UserName";
+    }
+
+    /// <summary>
+    /// Configured value
+    /// </summary>
+    public class Config
+    {
+        /// <summary>
+        /// Total time
+        /// </summary>
+        public static int TotalTime = int.Parse(ConfigurationManager.AppSettings["TotalTime"]);
     }
 
     /// <summary>

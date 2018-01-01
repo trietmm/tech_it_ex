@@ -54,5 +54,10 @@ namespace mti_tech_interview_examination.Models
         /// Started time
         /// </summary>
         public DateTime StartedTime { get; set; }
+
+        /// <summary>
+        /// Question index
+        /// </summary>
+        public int QuestionIndex { get; set; }
     }
 }

@@ -62,11 +62,16 @@ namespace mti_tech_interview_examination.Lib.Execute
                     if (canAnswerDB != null)
                     {
                         //update
-                        var lstProperty = typeof(Mti_Candidate_Question).GetProperties();
-                        foreach (var property in lstProperty)
-                        {
-                            property.SetValue(canAnswerDB, property.GetValue(canAnswer));
-                        }
+                        //var lstProperty = typeof(Mti_Candidate_Question).GetProperties();
+                        //foreach (var property in lstProperty)
+                        //{
+                        //    property.SetValue(canAnswerDB, property.GetValue(canAnswer));
+                        //}
+                        
+                        //Decide to assign directly since some property cannot be overwritten
+                        canAnswerDB.IsRight = canAnswer.IsRight;
+                        canAnswerDB.IsText = canAnswer.IsText;
+                        canAnswerDB.CandidateAnswer = canAnswer.CandidateAnswer;
                     }
                     else
                     {

@@ -63,6 +63,7 @@ namespace mti_tech_interview_examination.Controllers
         [HttpPost]
         public ActionResult LogOff()
         {
+            Session.Clear();
             FormsAuthentication.SignOut();
             return RedirectToAction("Login");
         }
@@ -169,6 +170,81 @@ namespace mti_tech_interview_examination.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// Save answer
+        /// </summary>
+        /// <param name="questionId"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public JsonResult SaveAnswer(int questionId, string value, int gotoQuestionIndex)
+        {
+            try
+            {
+                CandidateModel candidate = Session[SessionKey.Candidate] as CandidateModel;
+                if (candidate != null && candidate.Questions != null)
+                {                
+                    var question = candidate.Questions.FirstOrDefault(q => q.QuestionId == questionId);
+                    if (question != null)
+                    {
+                        //Save candidate index for unexpected tab closing
+                        candidate.QuestionIndex = gotoQuestionIndex < 0 ? 0 : (gotoQuestionIndex >= candidate.Questions.Count ? candidate.Questions.Count - 1 : gotoQuestionIndex);                        
+                        question.AnswerText = value;
+
+                        if(question.QuestionType == CommonModel.QuestionType.Selection)
+                        {
+                            //Reset all selection
+                            question.ListAnswer.ForEach(i => i.IsSelected = false);
+
+                            //Check the selected value
+                            var ans = question.ListAnswer.Where(a => a.AnswerId == int.Parse(value.Trim())).FirstOrDefault();
+                            if (ans != null)
+                                ans.IsSelected = true;
+                        }
+                        else if (question.QuestionType == CommonModel.QuestionType.MultiSelection)
+                        {
+                            //Reset all selection
+                            question.ListAnswer.ForEach(i => i.IsSelected = false);
+
+                            //Split value to multi values
+                            int[] values = value.Split(',').Select(s => int.Parse(s.Trim())).ToArray();
+
+                            //Check the selected values
+                            var ansList = question.ListAnswer.Where(a => values.Contains(a.AnswerId)).ToList();
+                            if (ansList != null)
+                                ansList.ForEach(a => a.IsSelected = true);
+                        }
+
+                        //Finish state
+                        if(gotoQuestionIndex >= candidate.Questions.Count)
+                        {
+                            List<Mti_Candidate_Question> candiateAnswerList = new List<Mti_Candidate_Question>();
+                            foreach(var ques in candidate.Questions)
+                            {
+                                var candidateAns = new Mti_Candidate_Question
+                                {
+                                    CandidateId = candidate.Id,
+                                    QuestionId = ques.QuestionId,
+                                    CandidateAnswer = ques.AnswerText
+                                };
+                                candiateAnswerList.Add(candidateAns);
+                            }
+                            RepoCandidate repo = new RepoCandidate();                            
+                            repo.CandidateAnswer(candiateAnswerList);
+
+                            //Return the flag to redirect to finish page
+                            return Json("done", JsonRequestBehavior.AllowGet);
+                        }
+                    }
+                    
+                    return Json(true, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+            return Json(false, JsonRequestBehavior.AllowGet);
+        }
         /// <summary>
         /// Go to Finish screen
         /// </summary>

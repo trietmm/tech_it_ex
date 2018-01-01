@@ -14,6 +14,11 @@ namespace mti_tech_interview_examination.Models.Response
 
         public List<Response_QuestionAnswer> ListAnswer { get; set; }
 
+        /// <summary>
+        /// Just for question type = Text
+        /// </summary>
+        public string AnswerText { get; set; }
+
     }
 
     public class Response_QuestionAnswer
@@ -23,7 +28,7 @@ namespace mti_tech_interview_examination.Models.Response
         public string Text { get; set; }
 
         //Is selected by candidate? Used if candidate accidently close the Test tab, he can restore his work then
-        public bool IsSelected { get; set; }
+        public bool? IsSelected { get; set; }
 
     }
 }
