@@ -1,0 +1,32 @@
+﻿@{ 
+    Func<string, string> IsActive = (code) =>
+    {
+        string currentUrl = HttpContext.Current.Request.Url.AbsolutePath;
+        if(currentUrl.IndexOf(code, StringComparison.OrdinalIgnoreCase) >= 0)
+        {
+            return "active";
+        }
+        return string.Empty;
+    };
+}
+<div class="menu">
+    <ul>
+        <li>
+            <a href="ListCandidates" class="@IsActive("ListCandidates")">
+                <span class="glyphicon glyphicon-user"></span>
+                <span class="glyphicon glyphicon-user small"></span>
+            </a>
+        </li><li>
+            <a href="CreateQuestion" class="@IsActive("CreateQuestion")">
+                <span class="glyphicon glyphicon-question-sign"></span>
+                <span class="glyphicon glyphicon-plus small"></span>
+            </a>
+        </li>
+        <li>
+            <a href="ListQuestions" class="@IsActive("ListQuestions")">
+                <span class="glyphicon glyphicon-question-sign"></span>
+                <span class="glyphicon glyphicon-list small"></span>
+            </a>
+        </li>
+    </ul>
+</div>

@@ -14,7 +14,7 @@ namespace mti_tech_interview_examination.Lib.Interface
         int Register(Mti_Candidate candidate);
         int Update(Mti_Candidate candidate);
         Mti_Candidate GetCandidate(int id);
-        List<Mti_Candidate> lstCandidate(Query_Candidate query);
+        List<Mti_Candidate> lstCandidate(Query_Candidate query = null);
 
         void CandidateAnswer(List<Mti_Candidate_Question> candidateAnswer);
     }

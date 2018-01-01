@@ -4,69 +4,65 @@
 
 @using mti_tech_interview_examination.Models
 @using mti_tech_interview_examination.Models.Entity
-@model List<Mti_Question>
-@if (Model != null && Model.Count > 0)
-{
-    <div class="form-wrapper" id="QuestionListWrapper" action="" method="post">
-        <div class="title-1">Question List</div>
-        <div class="question-des">
-            <span class="green-box"></span> Easy
-            <span class="yellow-box" style="margin-left:20px"></span> Normal
-            <span class="red-box" style="margin-left:20px"></span> Hard
-        </div>
-        <div id="QuestionList">
-            @for(int i = 0; i< Model.Count; i++)
-            {
-                var question = Model[i];
-                var answerType = question.QuestionType == CommonModel.QuestionType.Selection ? "radio" : (question.QuestionType == CommonModel.QuestionType.MultiSelection ? "checkbox" : "text");
-                <div class="question" id="Ques@(i)">
-                    <div class="question-header @question.QuestionLevel.ToString().ToLower()">
-                        <label class="question-name ">(@question.Id) @question.QuestionName</label>
-                        <span class="question-type"> < @question.QuestionType > </span>
-                        <a href="UpdateQuestion/@question.Id">Edit</a>
-                    </div>
-                    <div class="question-detail">
-                        <div class="question-content">@question.QuestionContent</div>
-                        <div class="question-answers">
-                            @if(answerType == "text")
-                            {
-                                if (question.Answers.Count > 0) {
-                                    <div>@question.Answers[0]</div>
-                                }
-                            }
-                            else
-                            {
-                                foreach (var ans in question.Answers)
-                                {
-                                    if (string.IsNullOrEmpty(ans.AnswerContent))
-                                    {
-                                        continue;
-                                    }
+@model QuestionListModel
+@if (Model != null)
+{    
+    List<Mti_Question> questions = Model.Questions;
+    PagingModel paging = Model.Paging;
 
-                                    <div class="question-answer @((bool)ans.IsRight? "checked":"")">
-                                        <input type="@answerType" value="" @((bool)ans.IsRight? "checked='checked'": "")/>
-                                        @ans.AnswerContent
-                                    </div>
+        <div class="form-wrapper" id="QuestionListWrapper" action="" method="post">
+            <div class="title-1">Question List</div>
+            <div class="question-des">
+                <span class="green-box"></span> Easy
+                <span class="yellow-box" style="margin-left:20px"></span> Normal
+                <span class="red-box" style="margin-left:20px"></span> Hard
+            </div>
+            <div id="QuestionList">
+                @for (int i = 0; i < questions.Count; i++)
+                {
+                    var question = questions[i];
+                    var answerType = question.QuestionType == CommonModel.QuestionType.Selection ? "radio" : (question.QuestionType == CommonModel.QuestionType.MultiSelection ? "checkbox" : "text");
+                    <div class="question" id="Ques@(i)">
+                        <div class="question-header @question.QuestionLevel.ToString().ToLower()">
+                            <label class="question-name ">(@question.Id) @question.QuestionName</label>
+                            <span class="question-type"> < @question.QuestionType > </span>
+                            <a href="UpdateQuestion/@question.Id">Edit</a>
+                        </div>
+                        <div class="question-detail">
+                            <div class="question-content">@question.QuestionContent</div>
+                            <div class="question-answers">
+                                @if (answerType == "text")
+                                {
+                                    if (question.Answers.Count > 0)
+                                    {
+                                        <div>@question.Answers[0]</div>
+                                    }
                                 }
-                            }                            
+                                else
+                                {
+                                    foreach (var ans in question.Answers)
+                                    {
+                                        if (string.IsNullOrEmpty(ans.AnswerContent))
+                                        {
+                                            continue;
+                                        }
+
+                                        <div class="question-answer @((bool)ans.IsRight? "checked":"")">
+                                            <input type="@answerType" value="" @((bool)ans.IsRight ? "checked='checked'" : "") />
+                                            @ans.AnswerContent
+                                        </div>
+                                    }
+                                }
+                            </div>
                         </div>
                     </div>
-                </div>
-            }
+                }
+                @Html.Partial("_Paging", paging)
+            </div>
+
             
         </div>
-    </div>
-}
+        }
 
 
-
-@section scripts{
-    <script>
-        
-        $(function () {
-            var admin = new Site.Logic();
-            //admin.handleEvent();
-        })
-        
-    </script>
-}
+@Html.Partial("_Menu")

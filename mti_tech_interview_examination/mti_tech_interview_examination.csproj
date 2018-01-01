@@ -180,6 +180,9 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\NotificationModel.cs" />
+    <Compile Include="Models\PagingModel.cs" />
+    <Compile Include="Models\CandidateListModel.cs" />
+    <Compile Include="Models\QuestionListModel.cs" />
     <Compile Include="Models\QuestionModel.cs" />
     <Compile Include="Models\CandidateModel.cs" />
     <Compile Include="Models\CommonModel.cs" />
@@ -255,6 +258,9 @@
     <Content Include="Views\Admin\Notification.cshtml" />
     <Content Include="Views\Admin\ListQuestions.cshtml" />
     <Content Include="Views\Admin\UpdateQuestion.cshtml" />
+    <Content Include="Views\Admin\_Paging.cshtml" />
+    <Content Include="Views\Admin\ListCandidates.cshtml" />
+    <Content Include="Views\Admin\_Menu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

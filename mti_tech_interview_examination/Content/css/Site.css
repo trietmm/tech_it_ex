@@ -12,6 +12,9 @@ body {
   body.admin #Header {
     height: 68px; }
 
+a {
+  text-decoration: none; }
+
 .form-line {
   padding: 10px 0px; }
 
@@ -48,6 +51,16 @@ input[type="radio"] {
   padding: 20px;
   color: white;
   border-bottom: 1px solid #eee; }
+
+.paging {
+  margin-top: 20px;
+  text-align: right; }
+  .paging a {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-left: 5px;
+    font-weight: bold; }
 
 /*#region Login*/
 #LoginFormWrapper {
@@ -175,7 +188,6 @@ input[type="radio"] {
 #AnswerPanel input[type='radio'], #AnswerPanel input[type='checkbox'] {
   vertical-align: middle; }
 
-/*#endregion*/
 #QuestionList {
   padding: 0 40px 40px 40px; }
   #QuestionList .question {
@@ -220,5 +232,71 @@ input[type="radio"] {
     background-color: orange; }
   .question-des .red-box {
     background-color: #a00; }
+
+#CandidateList {
+  padding: 40px; }
+  #CandidateList .form-line span {
+    display: inline-block;
+    padding: 0 15px 0 2px; }
+
+.can-name {
+  width: 250px; }
+
+.can-birthyear {
+  width: 120px; }
+
+.can-level {
+  width: 150px; }
+
+.can-cv {
+  width: 150px; }
+
+.can-date {
+  width: 200px;
+  font-size: 12px;
+  font-style: italic; }
+
+.can-detail {
+  width: 50px;
+  text-align: center; }
+
+.can-row {
+  padding: 10px 20px;
+  border-bottom: 1px dashed #ddd; }
+  .can-row span {
+    display: inline-block; }
+
+.can-header {
+  font-weight: bold; }
+  .can-header span {
+    font-size: 15px; }
+
+.menu {
+  width: 80px;
+  position: absolute;
+  top: 94px;
+  left: 20px;
+  text-align: center; }
+  .menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0; }
+  .menu a {
+    font-size: 30px;
+    display: block;
+    padding: 20px 10px; }
+    .menu a:hover {
+      background: #aaf;
+      color: #335; }
+    .menu a.active {
+      background: #88a;
+      color: #335; }
+  .menu .glyphicon {
+    position: relative; }
+    .menu .glyphicon.small {
+      font-size: 15px;
+      left: -10px; }
+
+/*#endregion*/
 
 /*# sourceMappingURL=Site.css.map */

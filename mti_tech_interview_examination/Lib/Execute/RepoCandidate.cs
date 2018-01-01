@@ -92,7 +92,7 @@ namespace mti_tech_interview_examination.Lib.Execute
             return ObjResult;
         }
 
-        public List<Mti_Candidate> lstCandidate(Query_Candidate query)
+        public List<Mti_Candidate> lstCandidate(Query_Candidate query = null)
         {
             List<Mti_Candidate> ObjResult = null;
             try
@@ -100,16 +100,21 @@ namespace mti_tech_interview_examination.Lib.Execute
                 using (var context = new Interview_Examination_Context())
                 {
                     var queryContext = context.Mti_Candidate.AsQueryable();
-                    if (!string.IsNullOrEmpty(query.SearchName))
+                    if(query != null)
                     {
-                        queryContext = queryContext.Where(m => m.CanidateName.Contains(query.SearchName));
-                    }
-                    if (query.SearchDateFrom != null && query.SearchDateTo != null)
-                    {
-                        queryContext = queryContext.Where(m => m.DateMakeExam >= query.SearchDateFrom && m.DateMakeExam <= query.SearchDateTo);
+                        if (!string.IsNullOrEmpty(query.SearchName))
+                        {
+                            queryContext = queryContext.Where(m => m.CanidateName.Contains(query.SearchName));
+                        }
+                        if (query.SearchDateFrom != null && query.SearchDateTo != null)
+                        {
+                            queryContext = queryContext.Where(m => m.DateMakeExam >= query.SearchDateFrom && m.DateMakeExam <= query.SearchDateTo);
 
+                        }
                     }
-                    ObjResult = queryContext.ToList();
+                   
+                    //Order desc by date
+                    ObjResult = queryContext.OrderByDescending(m => m.Id).ToList();
                 }
             }
             catch (Exception e)

@@ -23,6 +23,9 @@ body {
         }
     }
 }
+a{
+    text-decoration:none;
+}
 .form-line {
     padding: 10px 0px; 
 
@@ -71,7 +74,18 @@ input[type="radio"] {
     color: white;
     border-bottom: 1px solid #eee;
 }
-
+.paging{
+    margin-top:20px;
+    text-align:right;
+    a{
+        display:inline-block;
+        width: 20px;
+        height: 20px;
+        margin-left:5px;
+        font-weight:bold;
+        
+    }
+}
 /*#region Login*/
 #LoginFormWrapper {
     width: 420px;
@@ -257,7 +271,6 @@ input[type="radio"] {
         vertical-align:middle;
     }
 }
-/*#endregion*/
 
 #QuestionList {
     padding: 0 40px 40px 40px;
@@ -335,3 +348,94 @@ input[type="radio"] {
     }
 }
 
+
+#CandidateList {
+    padding: 40px;
+
+    .form-line {
+        span {
+            display: inline-block;
+            padding: 0 15px 0 2px;
+        }
+    }
+}
+
+.can-name {
+    width: 250px;
+}
+
+.can-birthyear {
+    width: 120px;
+}
+
+.can-level {
+    width: 150px;
+}
+
+.can-cv {
+    width: 150px;
+}
+
+.can-date {
+    width: 200px;
+    font-size: 12px;
+    font-style:italic;
+}
+
+.can-detail {
+    width: 50px;
+    text-align: center;
+}
+.can-row {
+    padding: 10px 20px;
+    border-bottom: 1px dashed #ddd;
+
+    span {
+        display: inline-block;
+    }
+}
+.can-header {
+    font-weight: bold;
+    span {
+        font-size: 15px;
+    }
+}
+.menu {
+    width: 80px;
+    position: absolute;
+    top: 94px;
+    left: 20px;
+    text-align: center;
+
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    a {
+        font-size: 30px;
+        display: block;
+        padding: 20px 10px;
+
+        &:hover {
+            background: #aaf;
+            color: #335;
+        }
+
+        &.active {
+            background: #88a;
+            color: #335;
+        }
+    }
+
+    .glyphicon {
+        position: relative;
+
+        &.small {
+            font-size: 15px;
+            left: -10px;
+        }
+    }
+}
+/*#endregion*/

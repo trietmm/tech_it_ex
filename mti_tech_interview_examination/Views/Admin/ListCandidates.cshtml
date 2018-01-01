@@ -1,0 +1,47 @@
+﻿@{
+    ViewBag.Title = "Candidate Page";
+}
+
+@using mti_tech_interview_examination.Models
+@using mti_tech_interview_examination.Models.Entity
+@model CandidateListModel
+
+@if (Model != null)
+{    
+    List<Mti_Candidate> candidates = Model.Candidates;
+    PagingModel paging = Model.Paging;
+
+        <div class="form-wrapper" id="CandidateListWrapper" action="" method="post">
+            <div class="title-1">Candidate List</div>
+            
+            <div id="CandidateList">
+                <div class="can-row can-header">
+                    <span class="can-name">Name</span>
+                    <span class="can-birthyear">Birth year</span>
+                    <span class="can-level">Level</span>
+                    <span class="can-cv">CV link</span>
+                    <span class="can-date">Test date</span>
+                    <span class="can-detail">Detail</span>
+                </div>
+                @for (int i = 0; i < candidates.Count; i++)
+                {
+                    var candidate = candidates[i];
+
+                    <div class="can-row">
+                        <span class="can-name">@candidate.CanidateName</span>
+                        <span class="can-birthyear">@candidate.CandidateBirthYear</span>
+                        <span class="can-level">@candidate.level</span>
+                        <span class="can-cv"><a target="_blank" href="@((candidate.ImgURL?? string.Empty).IndexOf("http", StringComparison.OrdinalIgnoreCase) >= 0?candidate.ImgURL: "http://" + candidate.ImgURL )">CV link</a></span>
+                        <span class="can-date">@candidate.DateMakeExam.ToString("yyyy/MM/dd HH:mm")</span>
+                        <span class="can-detail"><a href="UpdateCandidate?id=@candidate.Id"><span class="glyphicon glyphicon-play"></span></a></span>
+                    </div>
+
+                }
+                @Html.Partial("_Paging", paging)
+            </div>
+
+            
+        </div>
+        }
+
+@Html.Partial("_Menu")

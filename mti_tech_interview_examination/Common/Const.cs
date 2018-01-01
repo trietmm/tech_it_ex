@@ -41,6 +41,16 @@ namespace mti_tech_interview_examination.Common
         /// Total time
         /// </summary>
         public static int TotalTime = int.Parse(ConfigurationManager.AppSettings["TotalTime"]);
+
+        /// <summary>
+        /// Candidate page count
+        /// </summary>
+        public static int CandidatePageSize = int.Parse(ConfigurationManager.AppSettings["CandidatePageSize"]);
+
+        /// <summary>
+        /// Question page count
+        /// </summary>
+        public static int QuestionPageSize = int.Parse(ConfigurationManager.AppSettings["QuestionPageSize"]);
     }
 
     /// <summary>

@@ -1,0 +1,14 @@
+﻿@using mti_tech_interview_examination.Models
+@model PagingModel
+@if(Model != null)
+{
+    <div class="paging">
+    @for(int i = 0; i < Model.PageCount; i++)
+    {
+        string href = i == Model.PageIndex ? "javascript:void" : (Model.BaseUrl + "?pageIndex=" + i);
+        string cls = i == Model.PageIndex ? "btn-info": "btn-default";
+        <input type="button" class="btn @cls" value="@(i + 1)" onclick="location='@href'"/>
+        
+    }
+    </div>
+}

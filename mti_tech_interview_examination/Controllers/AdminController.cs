@@ -51,7 +51,7 @@ namespace mti_tech_interview_examination.Controllers
                 //save UserName to session
                 Session[SessionKey.UserName] = model.UserName;
 
-                return RedirectToAction("CreateQuestion");
+                return RedirectToAction("ListCandidates");
             }
 
             return View(model);
@@ -226,11 +226,61 @@ namespace mti_tech_interview_examination.Controllers
         /// List all the questions
         /// </summary>
         /// <returns></returns>
-        public ActionResult ListQuestions()
+        public ActionResult ListQuestions(int? pageIndex)
         {
-            IQuestion repoCandidate = new RepoQuestion();
-            List <Mti_Question> questions = repoCandidate.ListQuestion();
-            return View(questions);
+            pageIndex = pageIndex ?? 0;
+            IQuestion repoQuestion = new RepoQuestion();
+            QuestionListModel model = null;
+
+            //TODO: temporarily get whole list, not care about performance
+            List <Mti_Question> questions = repoQuestion.ListQuestion();
+            if(questions != null)
+            {
+                model = new QuestionListModel
+                {
+                    Questions = questions.Skip(pageIndex.Value * Config.QuestionPageSize).Take(Config.QuestionPageSize).ToList(),
+                    Paging = new PagingModel {
+                        PageSize = Config.QuestionPageSize,
+                        PageIndex = pageIndex.Value,
+                        PageCount = (questions.Count / Config.QuestionPageSize) + (questions.Count % Config.QuestionPageSize != 0 ? 1 : 0),
+                        BaseUrl = "ListQuestions"
+                    }                    
+                };    
+            }
+            
+            return View(model);
+        }
+
+        /// <summary>
+        /// List all the candidates
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ListCandidates(int? pageIndex)
+        {
+            pageIndex = pageIndex ?? 0;
+            ICandidate repoCandidate = new RepoCandidate();
+            CandidateListModel model = null;
+
+            //TODO: temporarily get whole list, not care about performance
+            //TODO: the criteria searching will be handled later
+            List<Mti_Candidate> candidates = repoCandidate.lstCandidate();
+
+            if (candidates != null)
+            {
+                model = new CandidateListModel
+                {
+                    Candidates = candidates.Skip(pageIndex.Value * Config.CandidatePageSize).Take(Config.CandidatePageSize).ToList(),
+                    Paging = new PagingModel
+                    {
+                        PageSize = Config.CandidatePageSize,
+                        PageIndex = pageIndex.Value,
+                        PageCount = (candidates.Count / Config.CandidatePageSize) + (candidates.Count % Config.CandidatePageSize != 0? 1: 0),
+                        BaseUrl = "ListCandidates"
+                    }
+                };
+            }
+
+            return View(model);
         }
     }
 }
