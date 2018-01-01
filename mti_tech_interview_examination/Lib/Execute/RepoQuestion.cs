@@ -36,12 +36,11 @@ namespace mti_tech_interview_examination.Lib.Execute
 
         public List<Mti_Question> ListQuestion()
         {
-            List<Mti_Question> ListResult = new List<Mti_Question>();
             using (var Context = new Interview_Examination_Context())
             {
-                ListResult = Context.Mti_Question.Include("Answers").OrderByDescending(q => q.Id).ToList();
+                var questions = Context.Mti_Question.Include("Answers").OrderByDescending(q => q.Id).ToList();
+                return questions;
             }
-            return ListResult;
         }
 
         public List<Mti_Question> ListQuestion(int Page, out int TotalNumber)
@@ -110,12 +109,11 @@ namespace mti_tech_interview_examination.Lib.Execute
 
         public Mti_Question ViewQuestion(int id)
         {
-            Mti_Question result = null;
             using (var Context = new Interview_Examination_Context())
             {
-                result = Context.Mti_Question.Include("Answers").Where(q => q.Id == id).FirstOrDefault();
+                var questions = Context.Mti_Question.Include("Answers").Where(q => q.Id == id).FirstOrDefault();
+                return questions;
             }
-            return result;
 
         }
     }
