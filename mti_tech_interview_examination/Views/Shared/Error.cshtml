@@ -1,13 +1,23 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Error</title>
-</head>
-<body>
-    <hgroup>
-        <h1>Error.</h1>
-        <h2>An error occurred while processing your request.</h2>
-    </hgroup>
-</body>
-</html>
+﻿@{
+    ViewBag.Title = "Home Page";
+    ViewBag.ExtendedClass = "admin";
+}
+
+
+@model mti_tech_interview_examination.Models.NotificationModel
+
+<div class="form-wrapper" id="LoginFormWrapper" >
+    <div class="title-1">Error!</div>
+
+    <div id="LoginForm">
+        <div class="form-line">
+           We're sorry! An error occurred while processing your request.
+
+        </div>
+        <div class="text-right">
+            <input id="SubmitButton" type="button" value="Back to Home" onclick ="javascript:location='/'" class="btn btn-default btn-info" />
+        </div>
+    </div>
+
+</div>
+

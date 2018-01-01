@@ -30,7 +30,9 @@ a:hover{
     padding: 10px 0px; 
 
 }
-
+.modal-header .close {
+    margin-top: -21px;
+}
 .form-control {
     //display: inline-block;
     -webkit-box-shadow: none;
@@ -260,6 +262,12 @@ input[type="radio"] {
             display: inline-block;
             padding: 0 15px 0 2px;
         }
+    }
+
+    #DeleteButton{
+        position:absolute;
+        left:10px;
+        top:0;
     }
 }
 #AnswerPanel {

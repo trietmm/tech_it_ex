@@ -254,5 +254,14 @@ namespace mti_tech_interview_examination.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Error page
+        /// </summary>
+        /// <returns></returns>
+        [AllowAnonymous]
+        public ActionResult Error()
+        {
+            return View();
+        }
     }
 }

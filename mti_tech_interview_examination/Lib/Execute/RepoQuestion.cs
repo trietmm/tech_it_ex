@@ -12,33 +12,61 @@ namespace mti_tech_interview_examination.Lib.Execute
 {
     public class RepoQuestion : IQuestion
     {
+        /// <summary>
+        /// Use these func/action to set delete/check if the question is deleted or not. Later, if we change logic, we only change this place
+        /// </summary>
+        public static Func<Mti_Question, bool> IsNotDeleted = (q) => q.QuestionName != "#";
+        public static Action<Mti_Question> Delete = (q) => q.QuestionName = "#";
+
         public void CreateQuestion(Mti_Question question, List<Mti_Answer> lstAnswer)
         {
             UpdateQuestion(question, lstAnswer);
         }
 
+        //NOTE: temporarily we do not consume this method because of two reasons:
+        //1. Technical: Mti_Candidate_Question table is refer to Mti_Question table
+        //2. Logic: we should keep answer result for ex-candidates athough some questions are removed
+        // => We will use IsDeleted flag instead
+        //public void DeleteQuestion(int idQuestion)
+        //{
+        //    using (var Context = new Interview_Examination_Context())
+        //    {
+
+        //        var question = Context.Mti_Question.Where(m => m.Id == idQuestion).FirstOrDefault();
+        //        if (question != null)
+        //        {
+        //            var lstAnswer = Context.Mti_Answer.Where(m => m.QuestionId == idQuestion).ToList();
+        //            Context.Mti_Answer.RemoveRange(lstAnswer);
+        //            Context.Mti_Question.Remove(question);
+
+        //            Context.SaveChanges();
+        //        }
+        //    }
+        //}
+        
+        /// <summary>
+        /// This method is copied from above method with a litle update. Temporarily delete quesion by set its name to '#'
+        /// </summary>
+        /// <param name="idQuestion"></param>
         public void DeleteQuestion(int idQuestion)
         {
             using (var Context = new Interview_Examination_Context())
             {
-
                 var question = Context.Mti_Question.Where(m => m.Id == idQuestion).FirstOrDefault();
                 if (question != null)
                 {
-                    var lstAnswer = Context.Mti_Answer.Where(m => m.QuestionId == idQuestion).ToList();
-                    Context.Mti_Answer.RemoveRange(lstAnswer);
-                    Context.Mti_Question.Remove(question);
-
+                    Delete(question);
                     Context.SaveChanges();
                 }
             }
         }
+        
 
         public List<Mti_Question> ListQuestion()
         {
             using (var Context = new Interview_Examination_Context())
             {
-                var questions = Context.Mti_Question.Include("Answers").OrderByDescending(q => q.Id).ToList();
+                var questions = Context.Mti_Question.Include("Answers").Where(IsNotDeleted).OrderByDescending(q => q.Id).ToList();
                 return questions;
             }
         }
@@ -48,7 +76,7 @@ namespace mti_tech_interview_examination.Lib.Execute
             List<Mti_Question> ListResult = new List<Mti_Question>();
             using (var Context = new Interview_Examination_Context())
             {
-                var query = Context.Mti_Question.Include("Answers");
+                var query = Context.Mti_Question.Include("Answers").Where(IsNotDeleted);
                 var page = query.OrderByDescending(p => p.Id)
                                 .Skip((Page - 1) * CommonModel.PageNumber).Take(CommonModel.PageNumber)
                                 .GroupBy(p => new { Total = query.Count() })
@@ -64,7 +92,7 @@ namespace mti_tech_interview_examination.Lib.Execute
         {
             using (var Context = new Interview_Examination_Context())
             {
-                var QuestionInDB = Context.Mti_Question.Where(m => m.Id == question.Id).FirstOrDefault();
+                var QuestionInDB = Context.Mti_Question.Where(IsNotDeleted).Where(m => m.Id == question.Id).FirstOrDefault();
                 if (QuestionInDB != null)
                 {
                     //update
@@ -111,7 +139,7 @@ namespace mti_tech_interview_examination.Lib.Execute
         {
             using (var Context = new Interview_Examination_Context())
             {
-                var questions = Context.Mti_Question.Include("Answers").Where(q => q.Id == id).FirstOrDefault();
+                var questions = Context.Mti_Question.Include("Answers").Where(IsNotDeleted).Where(q => q.Id == id).FirstOrDefault();
                 return questions;
             }
 

@@ -197,6 +197,19 @@ namespace mti_tech_interview_examination.Controllers
         }
 
         /// <summary>
+        /// Delete question
+        /// </summary>
+        /// <param name="questionId"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult DeleteQuestion(int questionId)
+        {
+            IQuestion repoQuestion = new RepoQuestion();
+            repoQuestion.DeleteQuestion(questionId);
+            return RedirectToAction("ListQuestions");
+        }
+
+        /// <summary>
         /// CreateQuestionSuccess
         /// </summary>
         /// <returns></returns>
@@ -350,5 +363,7 @@ namespace mti_tech_interview_examination.Controllers
             }
             return RedirectToAction("UpdateCandidate", new { id = candidateId });
         }
+
+        
     }
 }
