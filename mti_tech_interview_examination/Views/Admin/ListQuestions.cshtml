@@ -11,7 +11,7 @@
     PagingModel paging = Model.Paging;
 
         <div class="form-wrapper" id="QuestionListWrapper" action="" method="post">
-            <div class="title-1">Question List</div>
+            <div class="title-1">Question List @Html.Partial("_Menu")</div>
             <div class="question-des">
                 <span class="green-box"></span> Easy
                 <span class="yellow-box" style="margin-left:20px"></span> Normal
@@ -35,7 +35,7 @@
                                 {
                                     if (question.Answers.Count > 0)
                                     {
-                                        <div>@question.Answers[0]</div>
+                                        <div>@question.Answers[0].AnswerContent</div>
                                     }
                                 }
                                 else
@@ -64,5 +64,3 @@
         </div>
         }
 
-
-@Html.Partial("_Menu")

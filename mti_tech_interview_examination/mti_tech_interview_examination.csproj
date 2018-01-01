@@ -179,6 +179,7 @@
       <DependentUpon>201712230139564_201712230839.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\CandidateQuestionsModel.cs" />
     <Compile Include="Models\NotificationModel.cs" />
     <Compile Include="Models\PagingModel.cs" />
     <Compile Include="Models\CandidateListModel.cs" />
@@ -261,6 +262,7 @@
     <Content Include="Views\Admin\_Paging.cshtml" />
     <Content Include="Views\Admin\ListCandidates.cshtml" />
     <Content Include="Views\Admin\_Menu.cshtml" />
+    <Content Include="Views\Admin\UpdateCandidate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

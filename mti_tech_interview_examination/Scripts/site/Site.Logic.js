@@ -141,11 +141,14 @@
         //Cached query for refer later
         let $questionTypes = $("[name=QuestionType]");
         let $answerPanel = $("#AnswerPanel");
+        let $answerTextPanel = $("#AnswerTextPanel");
+        let $answerText = $answerTextPanel.find("input");
         let $checkboxChoice = $(".checkbox-choice");
         let $radioChoice = $(".radio-choice");
         let $correctAnswerIndexes = $("[name=CorrectAnswerIndexes]");
 
-        $answerPanel.show();        
+        $answerPanel.show();  
+        $answerTextPanel.hide();
         $radioChoice.show();
         $checkboxChoice.hide();
 
@@ -154,19 +157,24 @@
             //Case text, we will hide checkbox or radio answer
             if ($questionTypes.filter("[value=Text]:checked").length > 0) {
                 $answerPanel.hide();
+                $answerTextPanel.show();
             }
 
             //Case Selection, hide checkbox, show radio
             else if ($questionTypes.filter("[value=Selection]:checked").length > 0) {
                 $answerPanel.show();
+                $answerTextPanel.hide();
                 $checkboxChoice.hide();
                 $radioChoice.show();
+                $answerText.val("");
             }
             //Case Multi-Selection, show checkbox, hide radio
             else {
                 $answerPanel.show();
+                $answerTextPanel.hide();
                 $checkboxChoice.show();
                 $radioChoice.hide();
+                $answerText.val("");
             }
 
             //When we select other question types, we uncheck all previous answer selection

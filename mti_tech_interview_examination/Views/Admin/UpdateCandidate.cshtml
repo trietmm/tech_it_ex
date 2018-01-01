@@ -1,0 +1,81 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+@using mti_tech_interview_examination.Models
+@using mti_tech_interview_examination.Models.Entity
+@model CandidateQuestionsModel
+@if (Model != null)
+{    
+    List<Mti_Question> questions = Model.Questions;
+    List<CandidateAnswerModel> candidateAnswers = Model.CandidateAnswers;
+
+        <div class="form-wrapper" id="QuestionListWrapper" action="" method="post">
+            <div class="title-1">@(Model.Candidate.CanidateName + "'s Answer result: " + candidateAnswers.Where(c => c.IsRight == true).Count() + "/" + candidateAnswers.Count)
+                @Html.Partial("_Menu")
+            </div>
+            <div class="question-des">
+                <span class="green-box"></span> Correct
+                <span class="red-box" style="margin-left:20px"></span> Wrong
+                <span class="yellow-square" style="margin-left:20px"></span> Chosen from candidate
+            </div>
+            <form id="QuestionList" action="" method="post">
+                <input type="hidden" name="candidateId" value="@Model.Candidate.Id"/>
+                @for (int i = 0; i < questions.Count; i++)
+                    {
+                        var question = questions[i];
+                        var answerType = question.QuestionType == CommonModel.QuestionType.Selection ? "radio" : (question.QuestionType == CommonModel.QuestionType.MultiSelection ? "checkbox" : "text");
+                        var candidateAns = candidateAnswers.FirstOrDefault(c => c.QuestionId == question.Id);
+
+                        <div class="question" id="Ques@(i)">
+                        <div class="question-header @(candidateAns.IsRight == null? "": (candidateAns.IsRight.Value == true? "easy": "hard"))">
+                            <label class="question-name ">(@question.Id) @question.QuestionName</label>                            
+                        </div>
+                        <div class="question-detail">
+                            <div class="question-content">@question.QuestionContent</div>
+                            <div class="question-answers">
+                                @if (answerType == "text")
+                                {
+                                    string isChecked = candidateAns.IsRight == true ? "checked='checked'" : string.Empty;
+                                    <div class="question-answer">
+                                        @if (question.Answers.Count > 0)
+                                        {
+                                            @*Answer 0 will hold the system's suggested answer*@
+                                            <div><b>Suggested answer:</b> @question.Answers[0].AnswerContent</div>
+                                        }
+                                        <div><b>Candidate's answer:</b> @candidateAns.AnswerText</div>
+                                        <div class="text-answer">
+                                        Correct? <input type="checkbox" name="CorrectTextAnswers" @isChecked value="@question.Id"/>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    foreach (var ans in question.Answers)
+                                    {
+                                        if (string.IsNullOrEmpty(ans.AnswerContent))
+                                        {
+                                            continue;
+                                        }
+                                        string clsChoosen = candidateAns.AnwserIds.Contains(ans.Id) ? "chosen" : string.Empty;
+                                        <div class="question-answer @((bool)ans.IsRight? "checked":"") @clsChoosen">
+                                            <input readonly="readonly" type="@answerType" value="" @((bool)ans.IsRight ? "checked='checked'" : "") />
+                                            @ans.AnswerContent
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+                <div class="text-right" style="margin-top:20px">
+                    <input id="CancelButton" type="button" value="Cancel" onclick="javascript: location = '/Admin/ListCandidates';" class="btn btn-default btn-default" />
+                    <input id="SubmitButton" type="submit" value="Update" class="btn btn-default btn-info" />
+                </div>
+            </form>
+
+            
+        </div>
+        }
+
+

@@ -7,16 +7,20 @@
 @model CandidateModel
 @if (Model != null)
 {
-    List<int> Ids = Enumerable.Range(0, Const.MaxAnswerCount).ToList();
-    List<int> randomIds = new List<int>();
-    Random random = new Random();
-    while(Ids.Count > 0)
-    {
-        int popIndex = random.Next(Ids.Count);
-        int popId = Ids[popIndex];
-        randomIds.Add(popId);
-        Ids.RemoveAt(popIndex);
-    }
+    Func<int,List<int>> GetRamdomIds = (answerCount) => {
+        List<int> Ids = Enumerable.Range(0, answerCount).ToList();
+        List<int> randomIds = new List<int>();
+        Random random = new Random();
+        while (Ids.Count > 0)
+        {
+            int popIndex = random.Next(Ids.Count);
+            int popId = Ids[popIndex];
+            randomIds.Add(popId);
+            Ids.RemoveAt(popIndex);
+        }
+        return randomIds;
+    };
+
     var questions = Model.Questions;
 
 
@@ -36,8 +40,9 @@
                 <div class="test-answers">
                     @if (question.QuestionType != CommonModel.QuestionType.Text)
                     {
+                        var randomIds = GetRamdomIds(question.ListAnswer.Count);
                         string inputType = question.QuestionType == CommonModel.QuestionType.Selection ? "radio" : "checkbox";
-                        for (int j = 0; j < Const.MaxAnswerCount; j++)
+                        for (int j = 0; j < question.ListAnswer.Count(); j++)
                         {
                             var ans = question.ListAnswer[randomIds[j]];
                             var isCheck = ans.IsSelected == true ? "checked='checked'" : string.Empty;
@@ -55,7 +60,7 @@
                     else
                     {
                         <label>Answer: </label>
-                        <input type="text" class="question-answer" id="Ans@(question.QuestionId)" name="Ans@(question.QuestionId)" value="@(question.AnswerText)"/>
+                        <input type="text" class="question-answer  form-control" id="Ans@(question.QuestionId)" name="Ans@(question.QuestionId)" value="@(question.AnswerText)"/>
                     }
 
                 </div>

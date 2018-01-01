@@ -92,10 +92,13 @@ namespace mti_tech_interview_examination.Controllers
                 List<Mti_Answer> answers = new List<Mti_Answer>();
                 for(int i = 0; i < model.AnswerContents.Length; i++)
                 {
+                    if (string.IsNullOrWhiteSpace(model.AnswerContents[i]))
+                        continue;
+
                     Mti_Answer ans = new Mti_Answer
                     {
                         AnswerContent = model.AnswerContents[i],
-                        IsRight = model.CorrectAnswerIndexes.Contains(i),
+                        IsRight = model.CorrectAnswerIndexes?.Contains(i),
                          Question = question
                     };
                     answers.Add(ans);
@@ -119,10 +122,10 @@ namespace mti_tech_interview_examination.Controllers
         [HttpGet]
         public ActionResult UpdateQuestion(int id)
         {
-            IQuestion repoCandidate = new RepoQuestion();
+            IQuestion repoQuestion = new RepoQuestion();
 
             //Get question
-            Mti_Question question = repoCandidate.ViewQuestion(id);
+            Mti_Question question = repoQuestion.ViewQuestion(id);
             string[] answerContents = (question.Answers??new List<Mti_Answer>()).Select(a => a.AnswerContent).ToArray();
             int[] answerIds = (question.Answers ?? new List<Mti_Answer>()).Select(a => a.Id).ToArray();
             int[] correctAnswerIndexes = (question.Answers ?? new List<Mti_Answer>()).Where(a => a.IsRight == true).Select(a => a.Id).ToArray();
@@ -157,7 +160,7 @@ namespace mti_tech_interview_examination.Controllers
             //Check if model is valid
             if (ModelState.IsValid)
             {
-                IQuestion repoCandidate = new RepoQuestion();
+                IQuestion repoQuestion = new RepoQuestion();
 
                 //create new question
                 Mti_Question question = new Mti_Question
@@ -177,14 +180,14 @@ namespace mti_tech_interview_examination.Controllers
                     {
                         Id = model.AnswerIds[i],
                         AnswerContent = model.AnswerContents[i],
-                        IsRight = model.CorrectAnswerIndexes.Contains(i),
+                        IsRight = model.CorrectAnswerIndexes?.Contains(i),
                         QuestionId = model.Id
                     };
                     answers.Add(ans);
 
                 }
 
-                repoCandidate.UpdateQuestion(question, answers);
+                repoQuestion.UpdateQuestion(question, answers);
 
                 //Redirect to start page
                 return RedirectToAction("UpdateQuestionSuccess");
@@ -281,6 +284,71 @@ namespace mti_tech_interview_examination.Controllers
             }
 
             return View(model);
+        }
+
+
+        /// <summary>
+        /// Update candidate
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult UpdateCandidate(int id)
+        {
+            ICandidate repoCandidate = new RepoCandidate();
+            CandidateQuestionsModel model = new CandidateQuestionsModel {
+                CandidateAnswers = new List<CandidateAnswerModel>(),
+                Questions = new List<Mti_Question>()
+            };
+
+            //Get candidate's questions
+            var candidateQuestions = repoCandidate.GetCandidateQuestions(id);
+            if(candidateQuestions!= null && candidateQuestions.Count > 0)
+            {
+                model.Candidate = candidateQuestions[0].Candidate;
+                foreach(var canQuestion in candidateQuestions)
+                {
+                    //Add question
+                    model.Questions.Add(canQuestion.Question);
+
+                    //Extract answers
+                    model.CandidateAnswers.Add(new CandidateAnswerModel {
+                         QuestionId = canQuestion.QuestionId,
+                         IsRight = canQuestion.IsRight,
+                         AnswerText = canQuestion.CandidateAnswer,
+                         AnwserIds = canQuestion.IsText? new List<int>{ }: ((canQuestion.CandidateAnswer ?? string.Empty)
+                          .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(s => int.Parse(s.Trim())).ToList())
+                    });
+                }
+            }
+            return View(model);
+        }
+
+        /// <summary>
+        /// Update text questions
+        /// </summary>
+        /// <param name="candidateId"></param>
+        /// <param name="correctTextAnswers"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult UpdateCandidate(int candidateId, int[] correctTextAnswers)
+        {
+            ICandidate repoCandidate = new RepoCandidate();
+
+            //Get candidate's questions
+            var candidateQuestions = repoCandidate.GetCandidateQuestions(candidateId);
+            if (candidateQuestions != null && candidateQuestions.Count > 0)
+            {
+                //Filter text questions
+                candidateQuestions = candidateQuestions.Where(c => c.IsText).ToList();
+
+                //Initialize
+                candidateQuestions.ForEach(c => c.IsRight = correctTextAnswers!= null && correctTextAnswers.Contains(c.QuestionId));
+
+                //Update
+                repoCandidate.CandidateAnswer(candidateQuestions);
+            }
+            return RedirectToAction("UpdateCandidate", new { id = candidateId });
         }
     }
 }

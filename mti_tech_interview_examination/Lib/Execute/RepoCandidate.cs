@@ -12,6 +12,19 @@ namespace mti_tech_interview_examination.Lib.Execute
 {
     public class RepoCandidate : BaseClass, ICandidate
     {
+        /// <summary>
+        /// Get list of questions with candidate ID
+        /// </summary>
+        /// <param name="candidateId"></param>
+        /// <returns></returns>
+        public List<Mti_Candidate_Question> GetCandidateQuestions(int candidateId)
+        {
+            using (var context = new Interview_Examination_Context())
+            {
+                var candidateQuestions = context.Mti_Candidate_Question.Include("Candidate").Include("Question").Include("Question.Answers").Where(m => m.CandidateId == candidateId).ToList();
+                return candidateQuestions;
+            }
+        }
         public void CandidateAnswer(List<Mti_Candidate_Question> lstCandidateAnswer)
         {
             if (lstCandidateAnswer == null || lstCandidateAnswer.Count == 0)
@@ -32,7 +45,6 @@ namespace mti_tech_interview_examination.Lib.Execute
                 {
                     if (lstQuestionTextIdDB.Contains(canAnswer.QuestionId))
                     {
-                        canAnswer.IsRight = null;
                         canAnswer.IsText = true;
                     }
                     else

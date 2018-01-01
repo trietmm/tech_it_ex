@@ -23,7 +23,7 @@ body {
         }
     }
 }
-a{
+a:hover{
     text-decoration:none;
 }
 .form-line {
@@ -73,6 +73,7 @@ input[type="radio"] {
     padding: 20px;
     color: white;
     border-bottom: 1px solid #eee;
+    position:relative;
 }
 .paging{
     margin-top:20px;
@@ -283,8 +284,10 @@ input[type="radio"] {
             border-bottom: none;
         }
     }
+
     .question-header {
-        position:relative;
+        position: relative;
+
         &.easy {
             color: #2a0;
         }
@@ -296,11 +299,13 @@ input[type="radio"] {
         &.hard {
             color: #a00;
         }
-        a{
-            position:absolute;
-            right:20px;
+
+        a {
+            position: absolute;
+            right: 20px;
         }
     }
+
     .question-content {
         padding: 10px 0;
     }
@@ -315,14 +320,20 @@ input[type="radio"] {
         font-size: 13px;
 
         .question-answer {
+            position:relative;
             &.checked {
                 font-weight: bold;
+            }
+
+            &.chosen{
+                background: yellow;
             }
         }
     }
 }
 .question-des {
     padding: 20px 40px;
+
     .box {
         display: inline-block;
         height: 20px;
@@ -340,6 +351,15 @@ input[type="radio"] {
     .yellow-box {
         @extend .box;
         background-color: orange;
+    }
+
+    .yellow-square {
+        background: yellow;
+        display: inline-block;
+        height: 20px;
+        width: 20px;
+        position: relative;
+        top: 5px;
     }
 
     .red-box {
@@ -401,22 +421,25 @@ input[type="radio"] {
     }
 }
 .menu {
-    width: 80px;
+    //width: 80px;
     position: absolute;
-    top: 94px;
-    left: 20px;
+    top: 3px;
+    right: 20px;
     text-align: center;
 
     ul {
         list-style: none;
         padding: 0;
         margin: 0;
+        li{
+            float:left;
+        }
     }
 
     a {
         font-size: 30px;
         display: block;
-        padding: 20px 10px;
+        padding: 10px;
 
         &:hover {
             background: #aaf;
@@ -436,6 +459,17 @@ input[type="radio"] {
             font-size: 15px;
             left: -10px;
         }
+    }
+}
+.text-answer{
+    position:absolute;
+    right:50px;
+    top: -20px;
+    font-size:15px;
+    font-weight:bold;
+    input{
+        vertical-align:middle;
+        margin-top:0;
     }
 }
 /*#endregion*/

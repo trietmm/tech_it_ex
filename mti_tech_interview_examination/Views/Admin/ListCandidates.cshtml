@@ -12,7 +12,7 @@
     PagingModel paging = Model.Paging;
 
         <div class="form-wrapper" id="CandidateListWrapper" action="" method="post">
-            <div class="title-1">Candidate List</div>
+            <div class="title-1">Candidate List @Html.Partial("_Menu")</div>
             
             <div id="CandidateList">
                 <div class="can-row can-header">
@@ -43,5 +43,3 @@
             
         </div>
         }
-
-@Html.Partial("_Menu")

@@ -17,7 +17,7 @@
 @if (Model != null)
 {
 <form class="form-wrapper" id="QuestionFormWrapper" action="" method="post">
-    <div class="title-1">Update Question</div>
+    <div class="title-1">Update Question @Html.Partial("_Menu")</div>
     
     <div id="QuestionForm">
         <div class="form-line">
@@ -40,25 +40,26 @@
         
         <div class="form-line">
             @Html.LabelFor(m => m.QuestionType) *<br />
-            @Html.RadioButtonFor(m => m.QuestionType, CommonModel.QuestionType.Selection, new Dictionary<string, string> { { "data-val-required-radio", "Please select type" }, { "data-val", "true" }})<span>Selection</span>
-            @Html.RadioButtonFor(m => m.QuestionType, CommonModel.QuestionType.MultiSelection, new Dictionary<string, string> { { "data-val-required-radio", "Please select type" }, { "data-val", "true" }})<span>MultiSelection</span>
-            @Html.RadioButtonFor(m => m.QuestionType, CommonModel.QuestionType.Text, new Dictionary<string, string> { { "data-val-required-radio", "Please select type" }, { "data-val", "true" }})<span>Text</span>
-
+            @Html.RadioButtonFor(m => m.QuestionType, CommonModel.QuestionType.Selection, new Dictionary<string, object> { { "data-val-required-radio", "Please select type" }, { "data-val", "true" }, { "readonly", "readonly" } })<span>Selection</span>
+            @Html.RadioButtonFor(m => m.QuestionType, CommonModel.QuestionType.MultiSelection, new Dictionary<string, object> { { "data-val-required-radio", "Please select type" }, { "data-val", "true" }, { "readonly", "readonly" } })<span>MultiSelection</span>
+            @Html.RadioButtonFor(m => m.QuestionType, CommonModel.QuestionType.Text, new Dictionary<string, object> { { "data-val-required-radio", "Please select type" }, { "data-val", "true" }, { "readonly", "readonly" } })<span>Text</span>
+            
         </div>
-        
+        @if (Model.QuestionType != CommonModel.QuestionType.Text)
+        {
+
+
         <div id="AnswerPanel">
-            @while (count < Const.MaxAnswerCount)
+            @while (count < Model.AnswerContents.Count())
             {
                 string content = string.Empty;
                 string isChecked = string.Empty;
                 int answerId = 0;
-                if(count < Model.AnswerContents.Count())
-                {
-                    content = Model.AnswerContents[count];
-                    answerId = Model.AnswerIds[count];
-                    isChecked = (Model.CorrectAnswerIndexes.Contains(answerId)) ? "checked='checked'" : string.Empty;
-                }
-                @Model.AnswerContents[count]
+               
+                content = Model.AnswerContents[count];
+                answerId = Model.AnswerIds[count];
+                isChecked = (Model.CorrectAnswerIndexes.Contains(answerId)) ? "checked='checked'" : string.Empty;
+                
                 <div class="form-line">
                     <label>Answer @(count + 1)</label>
                     <input type="text" name="AnswerContents" class="form-control" value="@content" />
@@ -71,6 +72,15 @@
             }
             
         </div>
+        }
+        else
+        {
+            <div id="AnswerTextPanel">
+                Suggested answer:
+                <div class="form-line"><input type="text" name="AnswerContents" class="form-control" value="@(Model.AnswerContents != null && Model.AnswerContents.Count() > 0? Model.AnswerContents[0]: string.Empty )" /></div>
+                <input type="hidden" name="AnswerIds" value="@(Model.AnswerIds != null && Model.AnswerIds.Count() > 0? Model.AnswerIds[0].ToString(): string.Empty )" />
+            </div>
+        }
 
         <div class="text-right">
             <input id="CancelButton" type="button" value="Cancel" onclick="javascript: location = '/Admin/ListQuestions';" class="btn btn-default btn-default" />
@@ -90,4 +100,3 @@
         
     </script>
 }
-@Html.Partial("_Menu")
