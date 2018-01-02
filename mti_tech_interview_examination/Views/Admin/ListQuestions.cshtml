@@ -47,8 +47,8 @@
                                             continue;
                                         }
 
-                                        <div class="question-answer @((bool)ans.IsRight? "checked":"")">
-                                            <input type="@answerType" value="" @((bool)ans.IsRight ? "checked='checked'" : "") />
+                                        <div class="question-answer @(ans.IsRight == true? "checked":"")">
+                                            <input type="@answerType" value="" @(ans.IsRight == true? "checked='checked'" : "") />
                                             @ans.AnswerContent
                                         </div>
                                     }

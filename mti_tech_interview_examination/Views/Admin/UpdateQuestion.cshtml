@@ -40,9 +40,9 @@
         
         <div class="form-line">
             @Html.LabelFor(m => m.QuestionType) *<br />
-            @Html.RadioButtonFor(m => m.QuestionType, CommonModel.QuestionType.Selection, new Dictionary<string, object> { { "data-val-required-radio", "Please select type" }, { "data-val", "true" }, { "readonly", "readonly" } })<span>Selection</span>
-            @Html.RadioButtonFor(m => m.QuestionType, CommonModel.QuestionType.MultiSelection, new Dictionary<string, object> { { "data-val-required-radio", "Please select type" }, { "data-val", "true" }, { "readonly", "readonly" } })<span>MultiSelection</span>
-            @Html.RadioButtonFor(m => m.QuestionType, CommonModel.QuestionType.Text, new Dictionary<string, object> { { "data-val-required-radio", "Please select type" }, { "data-val", "true" }, { "readonly", "readonly" } })<span>Text</span>
+            @Html.RadioButtonFor(m => m.QuestionType, CommonModel.QuestionType.Selection, new Dictionary<string, object> { { "data-val-required-radio", "Please select type" }, { "data-val", "true" }, { "onclick", "javascript: return false;" } })<span>Selection</span>
+            @Html.RadioButtonFor(m => m.QuestionType, CommonModel.QuestionType.MultiSelection, new Dictionary<string, object> { { "data-val-required-radio", "Please select type" }, { "data-val", "true" }, { "onclick", "javascript: return false;" } })<span>MultiSelection</span>
+            @Html.RadioButtonFor(m => m.QuestionType, CommonModel.QuestionType.Text, new Dictionary<string, object> { { "data-val-required-radio", "Please select type" }, { "data-val", "true" }, { "onclick", "javascript: return false;" } })<span>Text</span>
             
         </div>
         @if (Model.QuestionType != CommonModel.QuestionType.Text)

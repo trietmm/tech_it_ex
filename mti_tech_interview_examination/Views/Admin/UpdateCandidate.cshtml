@@ -58,8 +58,8 @@
                                             continue;
                                         }
                                         string clsChoosen = candidateAns.AnwserIds.Contains(ans.Id) ? "chosen" : string.Empty;
-                                        <div class="question-answer @((bool)ans.IsRight? "checked":"") @clsChoosen">
-                                            <input readonly="readonly" type="@answerType" value="" @((bool)ans.IsRight ? "checked='checked'" : "") />
+                                        <div class="question-answer @(ans.IsRight == true? "checked":"") @clsChoosen">
+                                            <input onclick="javascript: return false;" type="@answerType" value="" @(ans.IsRight == true ? "checked='checked'" : "") />
                                             @ans.AnswerContent
                                         </div>
                                     }
