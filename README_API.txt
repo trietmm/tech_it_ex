@@ -20,3 +20,5 @@ Step 3: người chấm điểm sẽ nhấn vào danh sách candidate => tìm ra
 
 step chuẩn bị : nhập thông tin câu hỏi - nhập thông tin câu trả lời
 
+Step 4:
+
