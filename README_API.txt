@@ -20,4 +20,9 @@ Step 3: người chấm điểm sẽ nhấn vào danh sách candidate => tìm ra
 
 step chuẩn bị : nhập thông tin câu hỏi - nhập thông tin câu trả lời
 
+<<<<<<< HEAD
 Step 5:
+=======
+Step 4:
+
+>>>>>>> Add step 4 to readme
